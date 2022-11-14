@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
+import MovieView from '@/views/MovieView'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,12 @@ const routes = [
     name: 'LogInView',
     component: LogInView
   },
+
+  {
+    path: '/movies',
+    name: 'MovieView',
+    component: MovieView
+  }
 ]
 
 const router = new VueRouter({
