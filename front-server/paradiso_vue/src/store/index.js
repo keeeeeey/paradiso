@@ -2,12 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
+import createPersistedState from 'vuex-persistedstate'
 
 const API_URL = "http://127.0.0.1:8000"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState(),
+  ],
   state: {
     token: null
   },
@@ -19,7 +23,7 @@ export default new Vuex.Store({
   mutations: {
     SAVE_TOKEN(state, token) {
       state.token = token
-      router.push({ name: "ArticleView" })
+      router.push({ name: "MovieView" })
     },
   },
   actions: {
