@@ -8,6 +8,9 @@
         <label for="email">email : </label>
         <input type="text" id="email" v-model="email"><br>
   
+        <label for="nickname">nickname : </label>
+        <input type="text" id="nickname" v-model="nickname"><br>
+
         <label for="password"> password : </label>
         <input type="password" id="password" v-model="password"><br>
 
@@ -29,6 +32,7 @@ export default {
     return {
       username: null,
       email: null,
+      nickname: null,
       password: null,
       passwordConfirm: null,
     }
@@ -37,6 +41,7 @@ export default {
     signUp() {
       const username = this.username
       const email = this.email
+      const nickname = this.nickname
       const password = this.password
       const passwordConfirm = this.passwordConfirm
       
@@ -44,7 +49,7 @@ export default {
         method: "post",
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, email, password, passwordConfirm
+          username, email, nickname, password, passwordConfirm
         }
       })
         .then(() => {
