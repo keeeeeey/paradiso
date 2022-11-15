@@ -14,6 +14,9 @@
 </template>
   
 <script>
+import axios from 'axios'
+const API_URL = "http://127.0.0.1:8000"
+
 export default {
   name: 'LogInView',
   data() {
@@ -27,11 +30,18 @@ export default {
       const username = this.username
       const password = this.password
 
-      const payload = {
-        username, password
-      }
-
-      this.$store.dispatch('logIn', payload)
+      axios({
+        method: "post",
+        url: `${API_URL}/api/token/`,
+        data: {
+          username, password
+        }
+      })
+        .then((res) => {
+          localStorage.setItem("accessToken", res.data.access)
+          this.$router.push({ name: "MovieView" })
+        })
+        .catch((err) => console.log(err))
     }
   }
 }
