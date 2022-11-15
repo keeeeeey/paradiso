@@ -38,8 +38,13 @@ export default {
         }
       })
         .then((res) => {
+          console.log(res)
           localStorage.setItem("accessToken", res.data.access)
-          this.$router.push({ name: "MovieView" })
+          if (res.data.isFirst) {
+            this.$router.push({ name: "SelectGenreView" })
+          } else {
+            this.$router.push({ name: "MovieView" })
+          }
         })
         .catch((err) => console.log(err))
     }
