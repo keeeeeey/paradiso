@@ -2,18 +2,18 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 
 const API_URL = "http://127.0.0.1:8000"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState(),
-  ],
+  // plugins: [
+  //   createPersistedState(),
+  // ],
   state: {
-    token: null
+    accessToken: null
   },
   getters: {
     isLogin(state) {
@@ -21,26 +21,27 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    SAVE_TOKEN(state, token) {
-      state.token = token
+    SAVE_TOKEN(state, accessToken) {
+      localStorage.setItem("accessToken", accessToken)
       router.push({ name: "MovieView" })
     },
   },
   actions: {
     signUp(context, payload) {
       const username = payload.username
-      const password1 = payload.password1
-      const password2 = payload.password2
+      const email = payload.email
+      const password = payload.password
+      const passwordConfirm = payload.passwordConfirm
 
       axios({
         method: "post",
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password1, password2
+          username, email, password, passwordConfirm
         }
       })
-        .then((res) => {
-          context.commit("SAVE_TOKEN", res.data.key)
+        .then(() => {
+          router.push({ name: "LogInView" })
         })
         .catch((err) => console.log(err))
     },
@@ -51,13 +52,13 @@ export default new Vuex.Store({
 
       axios({
         method: "post",
-        url: `${API_URL}/accounts/login/`,
+        url: `${API_URL}/api/token/`,
         data: {
           username, password
         }
       })
         .then((res) => {
-          context.commit("SAVE_TOKEN", res.data.key)
+          context.commit("SAVE_TOKEN", res.data.access)
         })
         .catch((err) => console.log(err))
     }

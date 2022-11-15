@@ -15,22 +15,24 @@
   
 <script>
 export default {
-name: 'LogInView',
-data() {
+  name: 'LogInView',
+  data() {
     return {
-    username: null,
-    password: null,
+      username: null,
+      password: null,
     }
-},
-methods: {
+  },
+  methods: {
     logIn() {
-    const username = this.username
-    const password = this.password
-    const payload = {
+      const username = this.username
+      const password = this.password
+
+      const payload = {
         username, password
+      }
+
+      this.$store.dispatch('logIn', payload)
     }
-    this.$store.dispatch('logIn', payload)
-    }
-}
+  }
 }
 </script>
