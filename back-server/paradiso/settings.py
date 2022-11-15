@@ -61,7 +61,7 @@ MIDDLEWARE = [
 ]
 
 # 모든 Origin 허용
-CORS_ALLOWED_ALL_ORIGINS = True  
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'paradiso.urls'
 

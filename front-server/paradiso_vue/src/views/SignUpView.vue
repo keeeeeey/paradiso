@@ -4,12 +4,15 @@
       <form @submit.prevent="signUp">
         <label for="username">username : </label>
         <input type="text" id="username" v-model="username"><br>
+
+        <label for="email">email : </label>
+        <input type="text" id="email" v-model="email"><br>
   
-        <label for="password1"> password : </label>
-        <input type="password" id="password1" v-model="password1"><br>
-  
-        <label for="password2"> password confirmation : </label>
-        <input type="password" id="password2" v-model="password2">
+        <label for="password"> password : </label>
+        <input type="password" id="password" v-model="password"><br>
+
+        <label for="passwordConfirm"> password confirmation : </label>
+        <input type="password" id="passwordConfirm" v-model="passwordConfirm">
         
         <input type="submit" value="SignUp">
       </form>
@@ -18,25 +21,28 @@
 
 <script>
 export default {
-name: 'SignUpView',
-data() {
+  name: 'SignUpView',
+  data() {
     return {
-    username: null,
-    password1: null,
-    password2: null,
+      username: null,
+      email: null,
+      password: null,
+      passwordConfirm: null,
     }
-},
-methods: {
+  },
+  methods: {
     signUp() {
-    const username = this.username
-    const password1 = this.password1
-    const password2 = this.password2
-    
-    const payload = {
-        username, password1, password2
+      const username = this.username
+      const email = this.email
+      const password = this.password
+      const passwordConfirm = this.passwordConfirm
+      
+      const payload = {
+        username, email, password, passwordConfirm
+      }
+      
+      this.$store.dispatch("signUp", payload)
     }
-    this.$store.dispatch("signUp", payload)
-    }
-}
+  }
 }
 </script>
