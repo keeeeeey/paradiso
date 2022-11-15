@@ -22,18 +22,14 @@ INSTALLED_APPS = [
     'accounts',
     'movies',
     
+    # drf
     'rest_framework',
 
-    # Auth
-    'rest_framework.authtoken',
-    'dj_rest_auth',
+    # CORS policy
+    'corsheaders',
 
-    # registration
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'dj_rest_auth.registration',
+    # jwt
+    'rest_framework_simplejwt',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,19 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-SITE_ID = 1
-
 REST_FRAMEWORK = {
-    # Authentication
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 
-    # permission
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny',
-    ],
+    'DEFAULT_PERMISSION_CLASSES' : [
+         'rest_framework.permissions.AllowAny',
+    ]
 }
 
 MIDDLEWARE = [
@@ -69,13 +60,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# 특정 Origin만 선택적으로 허용
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
-]
-
 # 모든 Origin 허용
-# CORS_ALLOWED_ALL_ORIGINS = True  
+CORS_ALLOWED_ALL_ORIGINS = True  
 
 ROOT_URLCONF = 'paradiso.urls'
 
@@ -153,3 +139,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "accounts.User"
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+}
