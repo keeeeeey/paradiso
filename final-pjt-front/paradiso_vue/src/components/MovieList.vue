@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>영화리스트</h1>
-    <MovieListItem/>
+    <MovieListItem v-for="movie in movies" :key="movie.movie_id" :movie="movie"/>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
       url: 'http://127.0.0.1:8000/movies/',
     })
     .then(res => {
-      console.log(res)
+      this.movies = res.data
     })
     .catch(err => {
       console.log(err)

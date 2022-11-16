@@ -1,12 +1,16 @@
 <template>
   <div>
-    <h1>리스트</h1>
+    <p>제목: {{ movie.title }}</p>
+    <p>ID: {{ movie.movie_id }}</p>
   </div>
 </template>
 
 <script>
 export default {
     name: 'MovieListItem',
+    props: {
+      movie: Object,
+    }
 }
 </script>
 
