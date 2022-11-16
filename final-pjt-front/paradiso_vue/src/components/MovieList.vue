@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>영화리스트</h1>
-    <MovieListItem v-for="movie in movies" :key="movie.movie_id" :movie="movie"/>
+    <MovieListItem v-for="movie in movies" :key="movie.movie_id" :movie="movie" @click.native="goToMovie(movie.pk)"/>
   </div>
 </template>
 
@@ -30,6 +30,11 @@ export default {
     .catch(err => {
       console.log(err)
     })
+  },
+  methods: {
+    goToMovie(pk) {
+      this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
+    }
   }
 }
 </script>
