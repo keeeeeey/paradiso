@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>영화리스트</h1>
-    <MovieListItem v-for="movie in movies" :key="movie.movie_id" :movie="movie" @click.native="goToMovie(movie.pk)"/>
+    <MovieListItem v-for="movie in movies" :key="movie.id" :movie="movie" @click.native="goToMovie(movie.id)"/>
   </div>
 </template>
 
