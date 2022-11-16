@@ -1,11 +1,11 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import CommentSerializer
-from .models import Comment
+from .serializers import CommentSerializer, GenreSerializer
+from .models import Comment, Genre
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -33,3 +33,9 @@ def comment(request, comment_id):
     else:
         comment.delete()
         return Response({ 'id': comment_id }, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def genre_list(request):
+    genres = get_list_or_404(Genre)
+    serializer = GenreSerializer(genres, many=True)
+    return Response(serializer.data)
