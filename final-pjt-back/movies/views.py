@@ -14,11 +14,13 @@ def movie_list(request):
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
+
 
 @api_view(['POST'])
 def movie_likes(request, movie_id):
@@ -51,8 +53,9 @@ def comment_list(request, movie_id):
             serializer.save(user=request.user, movie_id=movie_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 @api_view(['PUT', 'DELETE'])
-def comment(request, comment_id):
+def comment(request, movie_id, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.method == 'PUT':
         serializer = CommentSerializer(comment, data=request.data)
@@ -62,6 +65,24 @@ def comment(request, comment_id):
     else:
         comment.delete()
         return Response({ 'id': comment_id }, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+def comment_likes(request, comment_id):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=comment_id)
+
+        if comment.like_users.filter(pk=request.user.id).exists():
+            comment.like_users.remove(request.user)
+            is_liked = False
+        else:
+            comment.like_users.add(request.user)
+            is_liked = True
+
+        return Response({"is_liked": is_liked}, status=status.HTTP_200_OK)
+    else:
+        return Response({"message": "로그인 후 이용가능합니다."}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 @api_view(['GET'])
 def genre_list(request):
