@@ -16,7 +16,7 @@ export default {
     CommentListItem,
   },
   props: {
-    movieid: String,
+    movieid: Number,
   },
   data() {
     return {
