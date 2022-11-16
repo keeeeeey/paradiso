@@ -14,6 +14,12 @@ def movie_list(request):
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def movie_detail(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
+
 @api_view(['GET', 'POST'])
 def comment_list(request, movie_id):
     if request.method == 'GET':
