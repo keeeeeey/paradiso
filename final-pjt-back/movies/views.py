@@ -58,14 +58,23 @@ def comment_list(request, movie_id):
 @api_view(['PUT', 'DELETE'])
 def comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
-    if request.method == 'PUT':
-        serializer = CommentSerializer(comment, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+    if request.user.is_authenticated:
+        if request.method == 'PUT':
+            if comment.user != request.user:
+                return Response({"message": "작성자만 수정이 가능합니다."}, status=status.HTTP_403_FORBIDDEN)
+
+            serializer = CommentSerializer(comment, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+        else:
+            if comment.user != request.user:
+                return Response({"message": "작성자만 삭제가 가능합니다."}, status=status.HTTP_403_FORBIDDEN)
+
+            comment.delete()
+            return Response({ 'id': comment_id }, status=status.HTTP_204_NO_CONTENT)
     else:
-        comment.delete()
-        return Response({ 'id': comment_id }, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "로그인 후 이용가능합니다."}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['POST'])
