@@ -17,7 +17,7 @@ export default {
     name: 'MovieDetail',
     data() {
         return {
-            movie_id: this.$route.params.movieId,
+            movie_id: Number(this.$route.params.movieId),
             comment: null,
         }
     },

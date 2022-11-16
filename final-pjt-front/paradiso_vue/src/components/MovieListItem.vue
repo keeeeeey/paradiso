@@ -2,6 +2,7 @@
   <div>
     <p>제목: {{ movie.title }}</p>
     <p>ID: {{ movie.id }}</p>
+    <p>좋아요 개수: {{ likecount }}</p>
     <button @click="likeMovie">좋아요</button>
   </div>
 </template>
@@ -14,21 +15,37 @@ export default {
     props: {
       movie: Object,
     },
+    data() {
+      return {
+        likecount: this.movie.like_users_count
+      }
+    },
     methods: {
       likeMovie(event) {
         event.stopPropagation()
         const token = localStorage.getItem('accessToken')
-        axios({
+        if (token) {
+          axios({
           method: 'post',
           url: `http://127.0.0.1:8000/movies/${this.movie.id}/likes/`,
           headers: {'Authorization': `Bearer ${token}`},
-        })
-        .then(() => {
-          console.log('좋아요 성공');
-        })
-        .catch(() => {
-          console.log('실패')
-        })
+          })
+          .then((res) => {
+            console.log(this.movie)
+            if (res.data.is_liked) {
+              this.likecount += 1
+            } else {
+              this.likecount -= 1
+            }
+          })
+          .catch(() => {
+            console.log('실패')
+          })
+        } else {
+          alert('로그인이 필요합니다')
+          this.$router.push({ name: 'LogInView' })
+        }
+        
       }
     }
 }
