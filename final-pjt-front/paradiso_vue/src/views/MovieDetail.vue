@@ -5,13 +5,13 @@
     <label for="comment">댓글: </label>
     <input type="text" v-model="comment">
     <button @click="inputComment">작성</button>
-
+    <CommentList :movieid="movie_id"/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+import CommentList from '@/components/CommentList.vue'
 
 export default {
     name: 'MovieDetail',
@@ -20,6 +20,9 @@ export default {
             movie_id: this.$route.params.movieId,
             comment: null,
         }
+    },
+    components: {
+      CommentList,
     },
     created() {
         axios({
