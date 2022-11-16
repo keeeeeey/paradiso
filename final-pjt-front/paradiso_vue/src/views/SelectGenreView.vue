@@ -5,8 +5,23 @@
 </template>
 
 <script>
+import axios from "axios"
+const API_URL = "http://127.0.0.1:8000"
+
 export default {
     name: "SelectGenreView",
+    created() {
+      axios({
+        method: "get",
+        url: `${API_URL}/movies/genres/`,
+      })
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
 }
 </script>
 
