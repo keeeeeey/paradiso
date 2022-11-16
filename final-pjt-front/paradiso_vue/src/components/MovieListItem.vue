@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>제목: {{ movie.title }}</p>
-    <p>ID: {{ movie.movie_id }}</p>
+    <p>ID: {{ movie.id }}</p>
   </div>
 </template>
 
