@@ -1,6 +1,7 @@
 <template>
   <div id="movie-view">
-    <h1>MovieView</h1>
+    <h1>home</h1>
+    <MovieList/>
     <label for="comment">댓글: </label>
     <input type="text" v-model="comment">
     <button @click="inputComment">작성</button>
@@ -9,9 +10,13 @@
 
 <script>
 import axios from 'axios'
+import MovieList from '@/components/MovieList'
 
 export default {
     name: "MovieView",
+    components: {
+      MovieList,
+    },
     data() {
       return{
         comment: null,
