@@ -5,6 +5,8 @@ from accounts.serializers import UserSerializer
 
 class MovieSerializer(serializers.ModelSerializer):
     like_users = UserSerializer(many=True, read_only=True)
+    like_users_count = serializers.IntegerField(source="like_users.count", read_only=True)
+    comment_count = serializers.IntegerField(source="comment_set.count", read_only=True)
 
     class Meta:
         model = Movie
@@ -12,11 +14,13 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    
+    like_users = UserSerializer(many=True, read_only=True)
+    like_users_count = serializers.IntegerField(source="like_users.count", read_only=True)
+
     class Meta:
         model = Comment
-        fields = ('user', 'content',)
+        fields = "__all__"
+        read_only_fields = ("user", "movie")
 
 
 class GenreSerializer(serializers.ModelSerializer):

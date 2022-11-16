@@ -48,14 +48,15 @@ def comment_list(request, movie_id):
     elif request.method == 'POST':
         if not request.user.is_authenticated:
             return Response({'message': '로그인 후 이용가능합니다.'}, status=status.HTTP_401_UNAUTHORIZED)
+        movie = get_object_or_404(Movie, pk=movie_id)
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user, movie_id=movie_id)
+            serializer.save(user=request.user, movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['PUT', 'DELETE'])
-def comment(request, movie_id, comment_id):
+def comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.method == 'PUT':
         serializer = CommentSerializer(comment, data=request.data)
