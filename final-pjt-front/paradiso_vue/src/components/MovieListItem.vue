@@ -39,6 +39,7 @@ export default {
             } else {
               this.likecount -= 1
             }
+            this.islike = res.data.is_liked
           })
           .catch(() => {
             console.log('실패')
@@ -51,14 +52,19 @@ export default {
     },
     created() {
       const token = localStorage.getItem('accessToken')
-      axios({
+      if (token) {
+        axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/accounts/${this.movie_id}/islike`,
+        url: `http://127.0.0.1:8000/accounts/${this.movie.id}/islike/`,
         headers: {'Authorization': `Bearer ${token}`},
-      })
-      .then((res) => {
-        this.islike = res.data
-      })
+        })
+        .then((res) => {
+          this.islike = res.data
+        })
+      } else {
+        this.islike = false
+      }
+   
     }
 }
 </script>
