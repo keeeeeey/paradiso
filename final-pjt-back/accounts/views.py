@@ -48,10 +48,10 @@ def profile(request, username):
 
 
 @api_view(['POST'])
-def follow(request, user_pk):
+def follow(request, user_id):
     if request.user.is_authenticated:
         User = get_user_model()
-        person = User.objects.get(pk=user_pk)
+        person = User.objects.get(pk=user_id)
         if person != request.user:
             if person.followers.filter(pk=request.user.pk).exists():
                 person.followers.remove(request.user)
@@ -63,3 +63,14 @@ def follow(request, user_pk):
         return Response({'is_followed': is_followed}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '로그인 후 이용가능합니다.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(['GET'])
+def isLike(request, movie_id):
+    if request.user.is_authenticated:
+        if request.user.like_movies.filter(pk=movie_id).exists():
+            return Response({'is_followed': True})
+        else:
+            return Response({'is_followed': False})
+    else:
+        return Response({'is_followed': False})
