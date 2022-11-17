@@ -1,8 +1,8 @@
 <template>
   <div>
     <p>
+      <router-link :to="{ name: 'ProfileView', params: { nickname: comment.user.nickname} }">{{ comment.user.nickname }}: </router-link>
       {{ comment.content }} | 좋아요 개수 : {{ likecount }}
-      {{ comment }}
       <button @click="likeComment" v-show="!islike">좋아요</button>
       <button @click="likeComment" v-show="islike">좋아요 취소</button>
     </p>
