@@ -1,7 +1,6 @@
 <template>
   <div>
     <p>제목: {{ movie.title }}</p>
-    <p>ID: {{ movie.id }}</p>
     <p>좋아요 개수: {{ likecount }}</p>
     <button @click="likeMovie" v-show="!islike">좋아요</button>
     <button @click="likeMovie" v-show="islike">좋아요 취소</button>

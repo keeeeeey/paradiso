@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>detail</h1>
-    <p>{{ movie_id }}</p>
+    <p>{{ moviedata.title }}</p>
     <label for="comment">댓글: </label>
     <input type="text" v-model="comment">
     <button @click="inputComment">작성</button>
@@ -19,6 +19,7 @@ export default {
         return {
             movie_id: Number(this.$route.params.movieId),
             comment: null,
+            moviedata: null,
         }
     },
     components: {
@@ -30,7 +31,7 @@ export default {
             url: `http://127.0.0.1:8000/movies/${this.movie_id}`,
         })
         .then(res => {
-            console.log(res)
+            this.moviedata = res.data
         })
     },
     methods: {
