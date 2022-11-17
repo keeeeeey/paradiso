@@ -16,7 +16,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("username", "email", "nickname", "followings_count", "followers_count", "id")
+        fields = ("username", "email", "nickname", "followings_count", "followers_count")
 
 # jwt token 결과 커스텀 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
