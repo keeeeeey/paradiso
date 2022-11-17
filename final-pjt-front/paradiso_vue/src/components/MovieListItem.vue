@@ -55,11 +55,10 @@ export default {
       if (token) {
         axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/accounts/${this.movie.id}/islike/`,
+        url: `http://127.0.0.1:8000/accounts/${this.movie.id}/movies/islike/`,
         headers: {'Authorization': `Bearer ${token}`},
         })
         .then((res) => {
-          console.log(res.data)
           this.islike = res.data.is_liked
         })
       } else {

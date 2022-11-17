@@ -2,7 +2,9 @@
   <div>
     <p>
       {{ comment.content }} | 좋아요 개수 : {{ likecount }}
-      <button @click="likeComment">좋아요</button>
+      {{ comment }}
+      <button @click="likeComment" v-show="!islike">좋아요</button>
+      <button @click="likeComment" v-show="islike">좋아요 취소</button>
     </p>
   </div>
 </template>
@@ -18,7 +20,8 @@ export default {
   },
   data() {
     return {
-      likecount: this.comment.like_users_count
+      likecount: this.comment.like_users_count,
+      islike: false
     }
   },
   methods: {
@@ -32,13 +35,29 @@ export default {
       .then((res) => {
         if (res.data.is_liked) {
             this.likecount += 1
-          } else {
-            this.likecount -= 1
-          }
+        } else {
+          this.likecount -= 1
+        }
+        this.islike = res.data.is_liked
       })
       .catch(() => {
         console.log('좋아요 실패')
       })
+    }
+  },
+  created() {
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      axios({
+      method: 'get',
+      url: `http://127.0.0.1:8000/accounts/${this.comment.id}/comments/islike/`,
+      headers: {'Authorization': `Bearer ${token}`},
+    })
+    .then(res => {
+      this.islike = res.data.is_liked
+    })
+    } else {
+      this.islike = false
     }
   }
 }
