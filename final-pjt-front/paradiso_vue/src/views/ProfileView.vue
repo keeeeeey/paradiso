@@ -27,7 +27,7 @@ export default {
     computed: {
       totalData() {
         return this.totaldata
-      }
+      },
     },
     created() {
       const token = localStorage.getItem('accessToken')
@@ -64,7 +64,7 @@ export default {
         })
         .then((res) => {
           this.isfollow = res.data.is_followed
-          this.followercount = res.data.followed_count
+          this.followercount = res.data.followers_count
         })
       }
     }

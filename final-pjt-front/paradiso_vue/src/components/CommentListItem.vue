@@ -33,12 +33,8 @@ export default {
         headers: {'Authorization': `Bearer ${token}`},
       })
       .then((res) => {
-        if (res.data.is_liked) {
-            this.likecount += 1
-        } else {
-          this.likecount -= 1
-        }
         this.islike = res.data.is_liked
+        this.likecount = res.data.like_users_count
       })
       .catch(() => {
         console.log('좋아요 실패')
