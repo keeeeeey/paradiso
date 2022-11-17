@@ -66,9 +66,20 @@ def follow(request, user_id):
 
 
 @api_view(['GET'])
-def isLike(request, movie_id):
+def movieIsLike(request, movie_id):
     if request.user.is_authenticated:
         if request.user.like_movies.filter(pk=movie_id).exists():
+            return Response({'is_liked': True})
+        else:
+            return Response({'is_liked': False})
+    else:
+        return Response({'is_liked': False})
+
+
+@api_view(['GET'])
+def commentIsLike(request, comment_id):
+    if request.user.is_authenticated:
+        if request.user.comment_set.filter(pk=comment_id).exists():
             return Response({'is_liked': True})
         else:
             return Response({'is_liked': False})
