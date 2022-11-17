@@ -30,11 +30,13 @@ def movie_likes(request, movie_id):
         if movie.like_users.filter(pk=request.user.id).exists():
             movie.like_users.remove(request.user)
             is_liked = False
+            movie_likes_count: movie.like_users.count()
         else:
             movie.like_users.add(request.user)
             is_liked = True
+            movie_likes_count: movie.like_users.count()
 
-        return Response({"is_liked": is_liked}, status=status.HTTP_200_OK)
+        return Response({"is_liked": is_liked, "movie_likes_count": movie_likes_count}, status=status.HTTP_200_OK)
     else:
         return Response({"message": "로그인 후 이용가능합니다."}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -85,11 +87,13 @@ def comment_likes(request, comment_id):
         if comment.like_users.filter(pk=request.user.id).exists():
             comment.like_users.remove(request.user)
             is_liked = False
+            like_users_count = comment.like_users.count()
         else:
             comment.like_users.add(request.user)
             is_liked = True
+            like_users_count = comment.like_users.count()
 
-        return Response({"is_liked": is_liked}, status=status.HTTP_200_OK)
+        return Response({"is_liked": is_liked, "like_users_count": like_users_count}, status=status.HTTP_200_OK)
     else:
         return Response({"message": "로그인 후 이용가능합니다."}, status=status.HTTP_401_UNAUTHORIZED)
 

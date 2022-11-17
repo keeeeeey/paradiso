@@ -56,11 +56,15 @@ def follow(request, user_id):
             if person.followers.filter(pk=request.user.pk).exists():
                 person.followers.remove(request.user)
                 is_followed = False
+                followers_count = person.followers.count()
             else:
                 person.followers.add(request.user)
                 is_followed = True
+                followers_count = person.followers.count()
 
-        return Response({'is_followed': is_followed}, status=status.HTTP_200_OK)
+            return Response({'is_followed': is_followed, 'followers_count': followers_count}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "자기 자신은 팔로우 할 수 없습니다."}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '로그인 후 이용가능합니다.'}, status=status.HTTP_401_UNAUTHORIZED)
 
