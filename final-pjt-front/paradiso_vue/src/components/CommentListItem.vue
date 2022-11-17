@@ -27,18 +27,24 @@ export default {
   methods: {
     likeComment() {
       const token = localStorage.getItem('accessToken')
-      axios({
-        method: 'post',
-        url: `http://127.0.0.1:8000/movies/comments/${this.comment.id}/likes/`,
-        headers: {'Authorization': `Bearer ${token}`},
-      })
-      .then((res) => {
-        this.islike = res.data.is_liked
-        this.likecount = res.data.like_users_count
-      })
-      .catch(() => {
-        console.log('좋아요 실패')
-      })
+      if (token) {
+        axios({
+          method: 'post',
+          url: `http://127.0.0.1:8000/movies/comments/${this.comment.id}/likes/`,
+          headers: {'Authorization': `Bearer ${token}`},
+        })
+        .then((res) => {
+          this.islike = res.data.is_liked
+          this.likecount = res.data.like_users_count
+        })
+        .catch(() => {
+          console.log('좋아요 실패')
+        })
+      } else {
+        alert('로그인이 필요합니다')
+        this.$router.push({ name: 'LogInView' })
+      }
+  
     }
   },
   created() {

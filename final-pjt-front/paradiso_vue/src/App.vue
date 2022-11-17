@@ -6,7 +6,6 @@
       <router-link :to="{ name: 'LogInView' }">LogInPage</router-link>
     </nav>
     <router-view/>
-    <h3>최신영화</h3>
     <LatestMovieView/>
 
   </div>
@@ -32,8 +31,7 @@ export default {
       method: 'get',
       url: 'https://api.themoviedb.org/3/movie/latest?api_key=9adec2ecce07845598e041a9836861b2&language=kr-KR',
     })
-    .then(res => {
-      console.log(res.data)
+    .then(() => {
     })
     .catch(err => {
       console.log(err)

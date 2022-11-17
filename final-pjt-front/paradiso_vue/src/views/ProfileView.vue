@@ -50,22 +50,28 @@ export default {
           this.isfollow = res.data.is_followed
         })
       } else {
-        this.isfollow = true
+        this.isfollow = false
       }
   
     },
     methods: {
       follow() {
         const token = localStorage.getItem('accessToken')
-        axios({
-          method: 'post',
-          url: `http://127.0.0.1:8000/accounts/${this.totaldata.userSerializer.id}/follow/`,
-          headers: {'Authorization': `Bearer ${token}`}
-        })
-        .then((res) => {
-          this.isfollow = res.data.is_followed
-          this.followercount = res.data.followers_count
-        })
+        if (token) {
+          axios({
+            method: 'post',
+            url: `http://127.0.0.1:8000/accounts/${this.totaldata.userSerializer.id}/follow/`,
+            headers: {'Authorization': `Bearer ${token}`}
+          })
+          .then((res) => {
+            this.isfollow = res.data.is_followed
+            this.followercount = res.data.followers_count
+          })
+        } else {
+          alert('로그인이 필요합니다.')
+          this.$router.push({ name: 'LogInView' })
+        }
+   
       }
     }
 }
