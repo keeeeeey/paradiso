@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
 import MovieView from '@/views/MovieView'
-import SelectGenreView from '@/views/SelectGenreView'
+import SelectMovieView from '@/views/SelectMovieView'
 import MovieDetial from '@/views/MovieDetail'
 import ProfileView from '@/views/ProfileView'
 
@@ -29,9 +29,9 @@ const routes = [
   },
 
   {
-    path: '/selectGenre',
-    name: 'SelectGenreView',
-    component: SelectGenreView
+    path: '/selectMovie',
+    name: 'SelectMovieView',
+    component: SelectMovieView
   },
   {
     path: '/movies/:movieId',
