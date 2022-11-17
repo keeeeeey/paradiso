@@ -64,7 +64,7 @@ export default {
       } else {
         this.islike = false
       }
-   
+
     }
 }
 </script>

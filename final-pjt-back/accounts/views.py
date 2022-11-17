@@ -69,8 +69,8 @@ def follow(request, user_id):
 def isLike(request, movie_id):
     if request.user.is_authenticated:
         if request.user.like_movies.filter(pk=movie_id).exists():
-            return Response({'is_followed': True})
+            return Response({'is_liked': True})
         else:
-            return Response({'is_followed': False})
+            return Response({'is_liked': False})
     else:
-        return Response({'is_followed': False})
+        return Response({'is_liked': False})
