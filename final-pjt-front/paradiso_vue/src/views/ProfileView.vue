@@ -3,7 +3,7 @@
     <h1>Profile 입니다.</h1>
     {{ nickname }}
     <div v-if="totalData">
-      팔로잉: {{ totalData.userSerializer.followers_count }} | 팔로워: {{ totalData.userSerializer.followings_count }}
+      팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
     </div>
     <button @click="follow" v-if="!isfollow">팔로우</button>
     <button @click="follow" v-if="isfollow">언팔로우</button>
@@ -21,6 +21,7 @@ export default {
         nickname: String(this.$route.params.nickname),
         totaldata: null,
         isfollow: false,
+        followrcount: null,
       }
     },
     computed: {
@@ -37,6 +38,7 @@ export default {
       .then(res => {
         console.log(res)
         this.totaldata = res.data.serializer
+        this.followercount = res.data.serializer.userSerializer.followers_count
       })
       if (token) {
         axios({
@@ -62,7 +64,7 @@ export default {
         })
         .then((res) => {
           this.isfollow = res.data.is_followed
-          
+          this.followercount = res.data.followed_count
         })
       }
     }
