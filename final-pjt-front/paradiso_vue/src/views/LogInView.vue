@@ -41,7 +41,7 @@ export default {
           console.log(res)
           localStorage.setItem("accessToken", res.data.access)
           if (res.data.isFirst) {
-            this.$router.push({ name: "SelectGenreView" })
+            this.$router.push({ name: "SelectMovieView" })
           } else {
             this.$router.push({ name: "MovieView" })
           }
