@@ -38,19 +38,10 @@ def profile(request, username):
     comments = person.comment_set.all()
     commentSerializer = CommentSerializer(comments, many=True)
 
-    if not request.user.is_authenticated:
-        isFollowed = False
-    else:
-        if request.user.followings.filter(username=username).exists():
-            isFollowed = True
-        else:
-            isFollowed = False
-
     serializer = {
         "userSerializer": profileSerializer.data,
         "movieSerializer": movieSerializer.data,
         "commentSerializer": commentSerializer.data,
-        "isFollowed": isFollowed,
     }
 
     return Response({"serializer": serializer})
@@ -81,8 +72,6 @@ def movieIsLike(request, movie_id):
             return Response({'is_liked': True})
         else:
             return Response({'is_liked': False})
-    else:
-        return Response({'is_liked': False})
 
 
 @api_view(['GET'])
@@ -92,5 +81,12 @@ def commentIsLike(request, comment_id):
             return Response({'is_liked': True})
         else:
             return Response({'is_liked': False})
-    else:
-        return Response({'is_liked': False})
+
+
+@api_view(['GET'])
+def isFollow(request, nickname):
+    if request.user.is_authenticated:
+        if request.user.followings.filter(nickname=nickname).exists():
+            return Response({'is_followed': True})
+        else:
+            return Response({'is_followed': False})
