@@ -1,5 +1,5 @@
 <template>
-  <div id="select-genre-view">
+  <div id="select-movie-view">
     <h1>SelectMovieView</h1>
   </div>
 </template>
