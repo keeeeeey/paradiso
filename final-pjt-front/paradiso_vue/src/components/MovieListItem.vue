@@ -59,7 +59,8 @@ export default {
         headers: {'Authorization': `Bearer ${token}`},
         })
         .then((res) => {
-          this.islike = res.data
+          console.log(res.data)
+          this.islike = res.data.is_liked
         })
       } else {
         this.islike = false
