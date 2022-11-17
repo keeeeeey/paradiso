@@ -14,12 +14,13 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     like_users_count = serializers.IntegerField(source="like_users.count", read_only=True)
 
     class Meta:
         model = Comment
         fields = "__all__"
-        read_only_fields = ("user", "movie", "like_users",)
+        read_only_fields = ("movie", "like_users",)
 
 
 class GenreSerializer(serializers.ModelSerializer):
