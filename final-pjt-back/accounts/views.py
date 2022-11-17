@@ -38,10 +38,10 @@ def profile(request, username):
     comments = person.comment_set.all()
     commentSerializer = CommentSerializer(comments, many=True)
 
-    if request.user == "Anonymous":
+    if not request.user.is_authenticated:
         isFollowed = False
     else:
-        if request.user.followings.filter(username=username).exist():
+        if request.user.followings.filter(username=username).exists():
             isFollowed = True
         else:
             isFollowed = False
@@ -81,6 +81,8 @@ def movieIsLike(request, movie_id):
             return Response({'is_liked': True})
         else:
             return Response({'is_liked': False})
+    else:
+        return Response({'is_liked': False})
 
 
 @api_view(['GET'])
@@ -90,3 +92,5 @@ def commentIsLike(request, comment_id):
             return Response({'is_liked': True})
         else:
             return Response({'is_liked': False})
+    else:
+        return Response({'is_liked': False})
