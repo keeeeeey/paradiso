@@ -3,6 +3,8 @@
     <h1>Profile 입니다.</h1>
     {{ nickname }}
     {{ totaldata }}
+    <button @click="follow" v-show="!isfollow">팔로우</button>
+    <button @click="follow" v-show="isfollow">언팔로우</button>
   </div>
 </template>
 
@@ -16,6 +18,7 @@ export default {
       return {
         nickname: String(this.$route.params.nickname),
         totaldata: null,
+        isfollow: false,
       }
     },
     created() {
