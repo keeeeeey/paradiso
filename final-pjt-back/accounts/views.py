@@ -90,3 +90,21 @@ def isFollow(request, nickname):
             return Response({'is_followed': True})
         else:
             return Response({'is_followed': False})
+
+
+@api_view(['GET'])
+def getFollowings(request, nickname):
+    User = get_user_model()
+    person = User.objects.get(nickname=nickname)
+    followings = person.followings.all()
+    serializer = UserSerializer(followings, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getFollowers(request, nickname):
+    User = get_user_model()
+    person = User.objects.get(nickname=nickname)
+    followers = person.followers.all()
+    serializer = UserSerializer(followers, many=True)
+    return Response(serializer.data)
