@@ -1,14 +1,16 @@
 <template>
-    <div id="login-view" class="margin-by-fixed">
-      <h1>LogIn Page</h1>
+    <div id="login-view" class="margin-by-fixed m-auto" style="width: 370px;">
+      <h1 style="margin-top: 200px">로그인</h1>
       <form @submit.prevent="logIn">
-        <label for="username">username : </label>
-        <input type="text" id="username" v-model="username"><br>
-  
-        <label for="password"> password : </label>
-        <input type="password" id="password" v-model="password"><br>
-  
-        <input type="submit" value="logIn">
+        <div class="mb-3">
+          <label for="username" class="form-label">아이디</label>
+          <input type="text" class="form-control" id="username" v-model="username">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">비밀번호</label>
+          <input type="password" class="form-control" id="password" v-model="password">
+        </div>
+        <button type="submit" class="btn btn-primary">로그인</button>
       </form>
     </div>
 </template>
@@ -29,7 +31,14 @@ export default {
     logIn() {
       const username = this.username
       const password = this.password
-      this.$emit("Login")
+
+      if (!username) {
+        alert("아이디를 입력해주세요.")
+        return
+      } else if (!password) {
+        alert("비밀번호를 입력해주세요.")
+        return
+      }
 
       axios({
         method: "post",
@@ -39,15 +48,19 @@ export default {
         }
       })
         .then((res) => {
-          console.log(res)
           localStorage.setItem("accessToken", res.data.access)
+          this.$emit("Login")
+
           if (res.data.isFirst) {
             this.$router.push({ name: "SelectMovieView" })
           } else {
             this.$router.push({ name: "MovieView" })
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          alert("아이디나 비밀번호가 일치하지 않습니다.")
+        })
     }
   }
 }

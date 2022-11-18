@@ -1,5 +1,5 @@
 <template>
-    <div id="sign-up-view" class="margin-by-fixed w-25 m-auto">
+    <div id="sign-up-view" class="margin-by-fixed m-auto" style="width: 370px;">
       <h1 class="mt-5">회원가입</h1>
       <form @submit.prevent="signUp">
         <div class="mb-3">
@@ -22,7 +22,7 @@
 
         <div class="mb-3">
           <label for="password" class="form-label">비밀번호</label>
-          <input type="password" class="form-control" id="password" v-model="password" @blur="passwordCheck">
+          <input type="password" class="form-control" id="password" v-model="password" @input="passwordCheck">
           <div id="passwordMessage" class="form-text"></div>
         </div>
 
@@ -31,11 +31,8 @@
           <input type="password" class="form-control" id="passwordConfirm" v-model="passwordConfirm" @input="passwordConfirmCheck">
           <div id="passwordConfirmMessage" class="form-text"></div>
         </div>
-        <!-- <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div> -->
-        <button type="submit" class="btn btn-primary" @click="signUp">회원가입</button>
+        
+        <button type="submit" class="btn btn-primary">회원가입</button>
       </form>
     </div>
 </template>
@@ -96,7 +93,9 @@ export default {
         .then(() => {
           this.$router.push({ name: "LogInView" })
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+        })
     },
 
     idCheck() {
