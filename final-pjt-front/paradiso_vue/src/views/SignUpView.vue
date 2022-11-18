@@ -4,31 +4,32 @@
       <form @submit.prevent="signUp">
         <div class="mb-3">
           <label for="username" class="form-label">아이디</label>
-          <input type="text" class="form-control" id="username" v-model.trim="username" @keyup.enter="idCheck" @blur="idCheck">
+          <input type="text" class="form-control" id="username" v-model.trim="username" @blur="idCheck">
           <div id="idMessage" class="form-text"></div>
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">이메일</label>
-          <input type="email" class="form-control" id="email" v-model.trim="email" @keyup.enter="emailCheck" @blur="emailCheck">
+          <input type="email" class="form-control" id="email" v-model.trim="email" @blur="emailCheck">
           <div id="emailMessage" class="form-text"></div>
         </div>
 
         <div class="mb-3">
           <label for="nickname" class="form-label">닉네임</label>
-          <input type="text" class="form-control" id="nickname" v-model.trim="nickname" @keyup.enter="nicknameCheck" @blur="nicknameCheck">
+          <input type="text" class="form-control" id="nickname" v-model.trim="nickname" @blur="nicknameCheck">
           <div id="nicknameMessage" class="form-text"></div>
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">비밀번호</label>
-          <input type="password" class="form-control" id="password" v-model="password" @keyup.enter="passwordCheck" @blur="passwordCheck">
+          <input type="password" class="form-control" id="password" v-model="password" @blur="passwordCheck">
           <div id="passwordMessage" class="form-text"></div>
         </div>
 
         <div class="mb-3">
           <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
-          <input type="password" class="form-control" id="passwordConfirm" v-model="passwordConfirm">
+          <input type="password" class="form-control" id="passwordConfirm" v-model="passwordConfirm" @input="passwordConfirmCheck">
+          <div id="passwordConfirmMessage" class="form-text"></div>
         </div>
         <!-- <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -56,10 +57,29 @@ export default {
       email_boolean: false,
       nickname_boolean: false,
       password_boolean: false,
+      password_confirm_boolean: false,
     }
   },
   methods: {
     signUp() {
+
+      if (!this.id_boolean) {
+        document.querySelector("#username").focus()
+        return
+      } else if (!this.email_boolean) {
+        document.querySelector("#email").focus()
+        return
+      } else if (!this.nickname_boolean) {
+        document.querySelector("#nickname").focus()
+        return
+      } else if (!this.password_boolean) {
+        document.querySelector("#password").focus()
+        return
+      } else if (!this.password_confirm_boolean) {
+        document.querySelector("#passwordConfirm").focus()
+        return
+      }
+
       const username = this.username
       const email = this.email
       const nickname = this.nickname
@@ -79,8 +99,7 @@ export default {
         .catch((err) => console.log(err))
     },
 
-    idCheck(event) {
-      event.stopPropagation()
+    idCheck() {
       const username = this.username
 
       const message = document.querySelector("#idMessage")
@@ -106,8 +125,6 @@ export default {
             this.id_boolean = true
           }
         })
-
-      document.querySelector("#email").focus()
     },
 
     emailCheck() {
@@ -136,8 +153,6 @@ export default {
             this.email_boolean = true
           }
         })
-
-      document.querySelector("#nickname").focus()
     },
 
     nicknameCheck() {
@@ -166,8 +181,6 @@ export default {
             this.nickname_boolean = true
           }
         })
-
-        document.querySelector("#password").focus()
     },
 
     passwordCheck() {
@@ -194,8 +207,22 @@ export default {
         message.style.color = "green"
         this.password_boolean = true
       }
+    },
 
-      document.querySelector("#passwordConfirm").focus()
+    passwordConfirmCheck() {
+      const password = this.password
+      const passwordComfirm = this.passwordConfirm
+      const message = document.querySelector("#passwordConfirmMessage")
+      
+      if (password === passwordComfirm) {
+        message.innerText = "비밀번호가 일치합니다."
+        message.style.color = "green"
+        this.password_confirm_boolean = true
+      } else {
+        message.innerText = "비밀번호가 일치하지 않습니다."
+        message.style.color = "red"
+        this.password_confirm_boolean = false
+      }
     }
 
   }
