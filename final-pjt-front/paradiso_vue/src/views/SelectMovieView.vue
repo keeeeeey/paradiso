@@ -1,5 +1,5 @@
 <template>
-  <div id="select-movie-view">
+  <div id="select-movie-view" class="margin-by-fixed">
     <h1>SelectMovieView</h1>
   </div>
 </template>

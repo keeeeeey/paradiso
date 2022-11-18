@@ -1,5 +1,5 @@
 <template>
-    <div id="login-view">
+    <div id="login-view" class="margin-by-fixed">
       <h1>LogIn Page</h1>
       <form @submit.prevent="logIn">
         <label for="username">username : </label>
@@ -29,6 +29,7 @@ export default {
     logIn() {
       const username = this.username
       const password = this.password
+      this.$emit("Login")
 
       axios({
         method: "post",

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="margin-by-fixed">
     <h1>detail</h1>
-    <p>{{ moviedata.title }}</p>
+    <p>{{ moviedata?.title }}</p>
     <label for="comment">댓글: </label>
     <input type="text" v-model="comment">
     <button @click="inputComment">작성</button>

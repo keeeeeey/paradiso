@@ -1,5 +1,5 @@
 <template>
-    <div id="sign-up-view">
+    <div id="sign-up-view" class="margin-by-fixed">
       <h1>Sign Up Page</h1>
       <form @submit.prevent="signUp">
         <label for="username">username : </label>

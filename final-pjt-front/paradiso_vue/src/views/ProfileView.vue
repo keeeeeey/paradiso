@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="margin-by-fixed">
     <h1>Profile 입니다.</h1>
     {{ nickname }}
     <div v-if="totalData">

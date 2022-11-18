@@ -11,6 +11,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: "/",
+    redirect: MovieView
+  },
+
+  {
     path: '/signup',
     name: 'SignUpView',
     component: SignUpView
@@ -33,16 +38,18 @@ const routes = [
     name: 'SelectMovieView',
     component: SelectMovieView
   },
+
   {
     path: '/movies/:movieId',
     name: 'MovieDetail',
     component: MovieDetial
   },
+
   {
     path: '/profile/:nickname',
     name: 'ProfileView',
     component: ProfileView
-  }
+  },
 ]
 
 const router = new VueRouter({

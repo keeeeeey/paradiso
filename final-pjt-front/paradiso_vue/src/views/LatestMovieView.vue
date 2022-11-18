@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="margin-by-fixed">
     <h1>최신 영화</h1>
   </div>
 </template>
