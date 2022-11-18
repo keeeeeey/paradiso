@@ -112,3 +112,14 @@ def getFollowers(request, nickname):
     followers = person.followers.all()
     serializer = UserSerializer(followers, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def idCheck(request, username):
+    User = get_user_model()
+
+    if User.objects.filter(username=username).exists():
+        return Response({"id_exist" : True})
+    else:
+        return Response({"id_exist" : False})
+    
