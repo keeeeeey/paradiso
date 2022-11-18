@@ -123,3 +123,22 @@ def idCheck(request, username):
     else:
         return Response({"id_exist" : False})
     
+
+@api_view(['GET'])
+def emailCheck(request, email):
+    User = get_user_model()
+
+    if User.objects.filter(email=email).exists():
+        return Response({"email_exist" : True})
+    else:
+        return Response({"email_exist" : False})
+
+
+@api_view(['GET'])
+def nicknameCheck(request, nickname):
+    User = get_user_model()
+
+    if User.objects.filter(nickname=nickname).exists():
+        return Response({"nickname_exist" : True})
+    else:
+        return Response({"nickname_exist" : False})
