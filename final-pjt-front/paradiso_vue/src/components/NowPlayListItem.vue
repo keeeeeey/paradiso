@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <img :src="imgurl + playmovie.poster_path" alt="" class="img-fluid">
     <!-- <p>좋아요 개수: {{ likecount }}</p> -->
     <!-- <button @click="likeMovie" v-show="!islike">좋아요</button>

@@ -2,21 +2,21 @@
   <div id="movie-view" class="margin-by-fixed">
     <TopRatedList/>
     <NowPlayList/>
-    <LatestMovieView/>
+    <UpcomingMovieList/>
   </div>
 </template>
 
 <script>
-import LatestMovieView from '@/views/LatestMovieView'
-import NowPlayList from '@/components/NowPlayList'
 import TopRatedList from '@/components/TopRatedList'
+import NowPlayList from '@/components/NowPlayList'
+import UpcomingMovieList from '@/components/UpcomingMovieList'
 
 export default {
     name: "MovieView",
     components: {
-      LatestMovieView,
+      TopRatedList,
       NowPlayList,
-      TopRatedList
+      UpcomingMovieList,
     },
     data() {
       return{
