@@ -1,6 +1,39 @@
 <template>
   <div id="now-play-list">
-    <NowPlayListItem v-for="nowplay in playlist" :key="nowplay.id" :playmovie="nowplay"/>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      </div>
+      <div class="carousel-inner" v-if="playlist">
+        <div class="carousel-item active">
+          <NowPlayListItem :playmovie="playlist[0]"/>
+        </div>
+        <div class="carousel-item">
+          <NowPlayListItem :playmovie="playlist[1]"/>
+        </div>
+        <div class="carousel-item">
+          <NowPlayListItem :playmovie="playlist[2]"/>
+        </div>
+        <div class="carousel-item">
+          <NowPlayListItem :playmovie="playlist[3]"/>
+        </div>
+        <div class="carousel-item">
+          <NowPlayListItem :playmovie="playlist[4]"/>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -22,12 +55,11 @@ export default {
     created() {
         axios({
             method: "get",
-            url: "https://api.themoviedb.org/3/movie/now_playing?api_key=fc9c1f07b9650d1ec4f98fb39efa792e&language=ko-KR&page=1"
+            url: "https://api.themoviedb.org/3/movie/top_rated?api_key=9adec2ecce07845598e041a9836861b2&language=ko&page=1&region=KR"
         })
-            .then((res) => {
-              console.log(res.data)
-                this.playlist = _.sampleSize(res.data.results, 5)
-            })
+          .then((res) => {
+            this.playlist = _.sampleSize(res.data.results, 5)
+          })
     }
 }
 </script>

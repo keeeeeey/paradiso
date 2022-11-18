@@ -88,7 +88,11 @@ export default {
   color: #2c3e50;
 }
 
+nav{
+  z-index: 1;
+}
+
 .margin-by-fixed {
-  padding-top: 100px;
+  padding-top: 56px;
 }
 </style>

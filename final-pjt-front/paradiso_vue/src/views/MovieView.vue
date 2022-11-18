@@ -1,6 +1,5 @@
 <template>
   <div id="movie-view" class="margin-by-fixed">
-    <h1>home</h1>
     <NowPlayList/>
     <MovieList/>
     <LatestMovieView/>
@@ -29,7 +28,7 @@ export default {
     created() {
       axios({
         method: 'get',
-        url: 'https://api.themoviedb.org/3/movie/latest?api_key=9adec2ecce07845598e041a9836861b2&language=kr-KR',
+        url: 'https://api.themoviedb.org/3/movie/now_playing?api_key=9adec2ecce07845598e041a9836861b2&language=en-US&page=1&region=KR',
       })
       .then((res) => {
         console.log(res)
