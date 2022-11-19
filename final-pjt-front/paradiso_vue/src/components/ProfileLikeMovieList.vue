@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <h1>좋아요한 영화</h1>
+    <div style="text-align: center">
+        <h1 class="mt-5 mt-1">좋아요한 영화</h1>
         <div class="d-flex poster-container">
             <div v-for="likeMovie in likeMovieList" :key="likeMovie.id" class="col-2">
-                <ProfileLikeMovieListItem :likeMovie="likeMovie" @click.native="goToMovie(playmovie.id)" />
+                <ProfileLikeMovieListItem :likeMovie="likeMovie" @click.native="goToMovie(likeMovie.id)" />
             </div>
         </div>
     </div>

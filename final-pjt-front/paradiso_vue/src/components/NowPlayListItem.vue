@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="a" style="height: 100%">
     <img :src="imgurl + playmovie.poster_path" alt="" class="img-fluid">
     <!-- <p>좋아요 개수: {{ likecount }}</p> -->
     <!-- <button @click="likeMovie" v-show="!islike">좋아요</button>
@@ -65,5 +65,15 @@ export default {
 </script>
 
 <style>
+.a {
+  overflow: hidden;
+}
 
+.a img {
+  transition: all 0.2s linear;
+}
+
+.a:hover img {
+  transform: scale(1.1);
+}
 </style>

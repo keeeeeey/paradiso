@@ -1,5 +1,5 @@
 <template>
-    <div id="profile-like-movie-list-item">
+    <div id="profile-like-movie-list-item" class="a">
         <img :src="imgurl + likeMovie.poster_path" alt="" class="img-fluid" style="height: 100%">
     </div>
 </template>
@@ -22,5 +22,17 @@ export default {
 <style>
 #profile-like-movie-list-item {
     height: 100%;
+}
+
+.a {
+  overflow: hidden;
+}
+
+.a img {
+  transition: all 0.2s linear;
+}
+
+.a:hover img {
+  transform: scale(1.1);
 }
 </style>
