@@ -89,7 +89,7 @@ export default {
 
 <style>
 #profile-img {
-  width: 200px;
+  width: 250px;
   border: solid 2px gray;
   border-radius: 50%;
 }

@@ -2,7 +2,7 @@
   <div>
     <h1>상영중인 영화</h1>
     <div class="d-flex poster-container">
-      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-3">
+      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2">
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)"/>
       </div>
     </div>

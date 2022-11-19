@@ -2,7 +2,7 @@
   <div class="margin-by-fixed">
     <h1>상영 예정 영화</h1>
     <div class="d-flex poster-container">
-      <div v-for="upcomingmovie in upcominglist" :key="upcomingmovie.id" class="col-3 take-movies">
+      <div v-for="upcomingmovie in upcominglist" :key="upcomingmovie.id" class="col-2 take-movies">
         <UpcomingMovieListItem :upcomingmovie="upcomingmovie" @click.native="goToMovie(upcomingmovie.id)"/>
       </div>
     </div>
