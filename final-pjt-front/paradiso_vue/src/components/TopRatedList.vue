@@ -55,7 +55,7 @@ export default {
     created() {
         axios({
             method: "get",
-            url: "https://api.themoviedb.org/3/movie/top_rated?api_key=9adec2ecce07845598e041a9836861b2&language=ko&page=1&region=KR"
+            url: "https://api.themoviedb.org/3/movie/top_rated?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR&page=1&region=KR"
         })
           .then((res) => {
             this.playlist = _.sampleSize(res.data.results, 5)

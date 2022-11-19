@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <h1>댓글 리스트</h1>
-    <CommentListItem v-for="comment in comments" :key="comment.id" :comment="comment"/>
-  </div>
+    <div>
+      <div class="w-50 mx-auto">
+        <CommentListItem v-for="comment in comments" :key="comment.id" :comment="comment"/>
+        <hr>
+      </div>
+    </div>
 </template>
 
 <script>

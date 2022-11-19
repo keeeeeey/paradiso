@@ -1,12 +1,18 @@
 <template>
   <div id="comment-item">
-    <p>
-      <router-link :to="{ name: 'ProfileView', params: { nickname: comment.user.nickname} }">{{ comment.user.nickname }}: </router-link>
-      {{ comment.content }} | 좋아요 개수 : {{ likecount }}
-      <button @click="likeComment" v-show="!islike">좋아요</button>
-      <button @click="likeComment" v-show="islike">좋아요 취소</button>
-      <button @click="deleteComment">삭제</button>
-    </p>
+      <p style="text-align:left;"><b>{{ comment.user.nickname }}</b></p>
+      <div class="d-flex justify-content-between">
+          <span>{{ comment.content }}</span>
+          <span class="d-flex flex-column">
+            <div>
+              <button @click="deleteComment" class="btn btn-danger comment-delete-button">삭제</button>
+              <button @click="likeComment" v-show="!islike" class="btn btn-primary comment-like-button">좋아요</button>
+              <button @click="likeComment" v-show="islike" class="btn btn-primary comment-like-button">좋아요 취소</button>
+            </div>
+            <span style="text-align:right">좋아요 수 : {{ likecount }}</span>
+          </span>
+          
+      </div>
   </div>
 </template>
 
@@ -56,7 +62,7 @@ export default {
           headers: {'Authorization': `Bearer ${token}`},
         })
         .then(() => {
-          document.getElementById('comment-item').remove()
+          document.getElementById("comment-item").remove()
         })
         .catch(err => {
           console.log(err)
@@ -86,5 +92,11 @@ export default {
 </script>
 
 <style>
+.comment-like-button{
+
+}
+.comment-delete-button{
+  margin-top: 0;
+}
 
 </style>

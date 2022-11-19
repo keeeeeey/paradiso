@@ -27,7 +27,7 @@ export default {
     created() {
         axios({
             method: "get",
-            url: "https://api.themoviedb.org/3/movie/upcoming?api_key=9adec2ecce07845598e041a9836861b2&language=en-US&page=1"
+            url: "https://api.themoviedb.org/3/movie/upcoming?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR&page=1"
         })
           .then((res) => {
             this.upcominglist = res.data.results
