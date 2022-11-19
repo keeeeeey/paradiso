@@ -34,7 +34,8 @@ export default {
     .catch(() => {
       console.log('댓글 가져오기 실패')
     })
-  }
+  },
+
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="margin-by-fixed">
-    <div class="detail-nav" :style="{ backgroundImage : `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${this.moviedata?.backdrop_path})`}">
+    <div class="detail-nav" :style="{ backgroundImage : `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${this.moviedata?.backdrop_path})`}" v-if="moviedata">
       <div class="detail-nav-box d-flex">
         <img :src="imgurl + moviedata?.poster_path" alt="" v-if="moviedata" class="col-3 m-3">
         <div>
@@ -19,7 +19,7 @@
     <label for="comment">댓글: </label>
     <input type="text" v-model="comment">
     <button @click="inputComment">작성</button>
-    <CommentList :movieid="movie_id"/>
+    <CommentList :movieid="movie_id" :key="componenetRerender"/>
   </div>
 </template>
 <script>
@@ -34,6 +34,7 @@ export default {
             comment: null,
             moviedata: null,
             imgurl: 'https://image.tmdb.org/t/p/original',
+            componenetRerender: 0
         }
     },
     computed: {
@@ -84,7 +85,8 @@ export default {
     methods: {
       inputComment() {
         const token = localStorage.getItem('accessToken')
-        axios({
+        if (token) {
+          axios({
           method: 'post',
           url: `http://127.0.0.1:8000/movies/${this.movie_id}/comments/`,
           data: {
@@ -92,13 +94,18 @@ export default {
             movie_id: this.movie_id,
           },
           headers: {'Authorization': `Bearer ${token}`},
-        })
-        .then(() => {
-          console.log('댓글작성 성공')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+          })
+          .then(() => {
+            this.componenetRerender += 1
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        } else {
+          alert('로그인이 필요합니다.')
+          this.$router.push({ name: 'LogInView' })
+        }
+        
       }
     }
 }
