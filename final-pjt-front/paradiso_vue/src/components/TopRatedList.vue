@@ -10,19 +10,19 @@
       </div>
       <div class="carousel-inner" v-if="playlist">
         <div class="carousel-item active">
-          <TopRatedListItem :playmovie="playlist[0]"/>
+          <TopRatedListItem :playmovie="playlist[0]" style="cursor:pointer"/>
         </div>
         <div class="carousel-item">
-          <TopRatedListItem :playmovie="playlist[1]"/>
+          <TopRatedListItem :playmovie="playlist[1]" style="cursor:pointer"/>
         </div>
         <div class="carousel-item">
-          <TopRatedListItem :playmovie="playlist[2]"/>
+          <TopRatedListItem :playmovie="playlist[2]" style="cursor:pointer"/>
         </div>
         <div class="carousel-item">
-          <TopRatedListItem :playmovie="playlist[3]"/>
+          <TopRatedListItem :playmovie="playlist[3]" style="cursor:pointer"/>
         </div>
         <div class="carousel-item">
-          <TopRatedListItem :playmovie="playlist[4]"/>
+          <TopRatedListItem :playmovie="playlist[4]" style="cursor:pointer"/>
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

@@ -2,9 +2,11 @@
   <div>
     <h1>상영중인 영화</h1>
     <div class="d-flex poster-container">
-      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2">
-        <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)"/>
+      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2"  id="now-playlist-box">
+        <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>
+      <button @click="scrollLeft">&lt;</button>
+      <button @click="scrollRight">&gt;</button>
     </div>
   </div>
 </template>
@@ -48,6 +50,11 @@ export default {
   methods: {
     goToMovie(pk) {
       this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
+    },
+    scrollLeft() {
+    },
+    scrollRight() {
+
     }
   }
 }

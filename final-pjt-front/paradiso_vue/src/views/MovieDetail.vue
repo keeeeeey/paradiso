@@ -1,6 +1,6 @@
 <template>
   <div class="margin-by-fixed">
-    <div class="detail-nav" :style="{ backgroundImage : `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${this.moviedata.backdrop_path})`}">
+    <div class="detail-nav" :style="{ backgroundImage : `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${this.moviedata?.backdrop_path})`}">
       <div class="detail-nav-box d-flex">
         <img :src="imgurl + moviedata?.poster_path" alt="" v-if="moviedata" class="col-3 m-3">
         <div>
