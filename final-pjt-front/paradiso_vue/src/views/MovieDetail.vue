@@ -16,9 +16,11 @@
         </div>
       </div>
     </div>
-    <label for="comment">댓글: </label>
-    <input type="text" v-model="comment">
-    <button @click="inputComment">작성</button>
+    <div class="d-flex justify-content-center my-5 align-items-center">
+      <label for="comment">댓글: </label>
+      <input type="text" v-model="comment">
+      <button @click="inputComment">작성</button>
+    </div>
     <CommentList :movieid="movie_id" :key="componenetRerender"/>
   </div>
 </template>

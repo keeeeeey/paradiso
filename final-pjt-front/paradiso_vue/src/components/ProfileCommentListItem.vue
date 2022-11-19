@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .comment-container {
         text-align: left;
         box-sizing: border-box;

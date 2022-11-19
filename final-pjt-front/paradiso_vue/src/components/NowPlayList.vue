@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="margin-by-fixed">
     <h1>상영중인 영화</h1>
     <div class="d-flex poster-container">
       <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2"  id="now-playlist-box">
@@ -38,7 +38,7 @@ export default {
     })
     axios({
       method: 'get',
-      url: 'https://api.themoviedb.org/3/movie/now_playing?api_key=9adec2ecce07845598e041a9836861b2&language=en-US&page=1&region=KR',
+      url: 'https://api.themoviedb.org/3/movie/now_playing?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR&page=1&region=KR',
     })
     .then((res) => {
       this.playlist = res.data.results
