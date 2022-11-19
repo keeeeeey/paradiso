@@ -1,14 +1,18 @@
 <template>
   <div class="margin-by-fixed">
-    <img src="../assets/logo.png" alt="profile-img" id="profile-img">
-    <h1>{{ nickname }}</h1>
+    <div class="profile-data-box">
+      <img src="../assets/logo.png" alt="profile-img" id="profile-img" style="margin-bottom: 20px">
+      <h1>{{ nickname }}</h1>
 
-    <div v-if="totalData">
-      팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
-      <button @click="follow" v-if="!isfollow">팔로우</button>
-      <button @click="follow" v-if="isfollow">언팔로우</button>
+      <div v-if="totalData">
+        팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
+        <button @click="follow" v-if="!isfollow" class="btn btn-primary">팔로우</button>
+        <button @click="follow" v-if="isfollow" class="btn btn-primary">언팔로우</button>
+      </div>
+      <br>
+      <h2>좋아하는 영화</h2>
     </div>
-    <h2>좋아하는 영화</h2>
+    
     <ProfileLikeMovieList :likeMovieList="totaldata?.movieSerializer"/>
     <ProfileCommentList :commentList="totaldata?.commentSerializer"/>
   </div>
@@ -92,5 +96,10 @@ export default {
   width: 250px;
   border: solid 2px gray;
   border-radius: 50%;
+}
+
+.profile-data-box {
+  text-align: center;
+  margin-top: 50px;
 }
 </style>

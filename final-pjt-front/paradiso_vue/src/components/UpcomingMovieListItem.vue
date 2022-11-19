@@ -1,5 +1,5 @@
 <template>
-  <div class="poster-container" style="height: 100%">
+  <div class="a" style="height: 100%">
     <img :src="imgurl + upcomingmovie.poster_path" alt="" class="mw-100" style="height: 100%">
   </div>
 </template>
@@ -20,7 +20,15 @@ export default {
 </script>
 
 <style>
-.poster-container{
+.a {
+  overflow: hidden;
+}
 
+.a img {
+  transition: all 0.2s linear;
+}
+
+.a:hover img {
+  transform: scale(1.1);
 }
 </style>
