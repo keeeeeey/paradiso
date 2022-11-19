@@ -3,7 +3,7 @@
     <h1>상영 예정 영화</h1>
     <div class="d-flex poster-container">
       <div v-for="upcomingmovie in upcominglist" :key="upcomingmovie.id" class="col-2 take-movies">
-        <UpcomingMovieListItem :upcomingmovie="upcomingmovie" @click.native="goToMovie(upcomingmovie.id)"/>
+        <UpcomingMovieListItem :upcomingmovie="upcomingmovie" @click.native="goToMovie(upcomingmovie.id)" style="cursor: pointer;"/>
       </div>
     </div>
   </div>
@@ -45,6 +45,4 @@ export default {
 </script>
 
 <style>
-.take-movies{
-}
 </style>
