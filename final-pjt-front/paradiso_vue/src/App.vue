@@ -47,7 +47,7 @@
         </div>
       </div>
     </nav>
-    <router-view @Login="isLoggedIn=true"/>
+    <router-view @Login="isLoggedIn=true" :key="$route.fullPath"/>
 
   </div>
 </template>
@@ -95,7 +95,7 @@ export default {
 }
 
 nav{
-  z-index: 1;
+  z-index: 9999;
 }
 
 .margin-by-fixed {

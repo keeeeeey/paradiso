@@ -1,7 +1,11 @@
 <template>
     <div class="comment-container">
         <p><b>{{ comment.movie.title }}</b></p>
-        <p style="margin: 0;">{{ comment.content }}</p>
+        <div class="d-flex justify-content-between">
+            <p style="margin: 0;">{{ comment.content }}</p>
+            <p style="margin: 0;">좋아요 수 : {{ comment.like_users_count }}</p>
+        </div>
+        
     </div>
 </template>
 

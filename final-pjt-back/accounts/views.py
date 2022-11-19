@@ -38,10 +38,14 @@ def profile(request, nickname):
     comments = person.comment_set.all()
     commentSerializer = CommentSerializer(comments, many=True)
 
+    like_comments = person.like_comments.all()
+    likeCommentSerializer = CommentSerializer(like_comments, many=True)
+
     serializer = {
         "userSerializer": profileSerializer.data,
         "movieSerializer": movieSerializer.data,
         "commentSerializer": commentSerializer.data,
+        "likeCommentSerializer": likeCommentSerializer.data,
     }
 
     return Response({"serializer": serializer})
