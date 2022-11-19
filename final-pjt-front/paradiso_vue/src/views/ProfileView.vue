@@ -2,21 +2,25 @@
   <div class="margin-by-fixed">
     <div class="profile-data-box">
       <img src="../assets/logo.png" alt="profile-img" id="profile-img" style="margin-bottom: 20px">
-      <h1>{{ nickname }}</h1>
-
-      <div v-if="totalData">
-        팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
-        <div v-if="!isMypage">
+      <div class="d-flex justify-content-center align-items-center">
+        <h1>{{ nickname }}</h1>
+        <div v-if="!isMypage" style="margin-left: 10px;">
           <button @click="follow" v-if="!isfollow" class="btn btn-primary">팔로우</button>
           <button @click="follow" v-if="isfollow" class="btn btn-primary">언팔로우</button>
         </div>
+      </div>
+      <div v-if="totalData">
+        팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
       </div>
       <br>
       <h2>좋아하는 영화</h2>
     </div>
     
     <ProfileLikeMovieList :likeMovieList="totaldata?.movieSerializer"/>
+    <h1 class="text-center mt-5 mt-1">작성한 댓글</h1>
     <ProfileCommentList :commentList="totaldata?.commentSerializer"/>
+    <h1 class="text-center mt-5 mt-1">좋아요한 댓글</h1>
+    <ProfileCommentList :commentList="totaldata?.likeCommentSerializer"/>
   </div>
 </template>
 
