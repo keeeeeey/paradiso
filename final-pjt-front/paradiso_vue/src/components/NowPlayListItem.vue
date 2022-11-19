@@ -1,6 +1,6 @@
 <template>
   <div class="a" style="height: 100%">
-    <img :src="imgurl + playmovie.poster_path" alt="" class="img-fluid">
+    <img :src="imgurl + playmovie.poster_path" alt="" class="img-fluid" style="height: 100%">
     <!-- <p>좋아요 개수: {{ likecount }}</p> -->
     <!-- <button @click="likeMovie" v-show="!islike">좋아요</button>
     <button @click="likeMovie" v-show="islike">좋아요 취소</button> -->

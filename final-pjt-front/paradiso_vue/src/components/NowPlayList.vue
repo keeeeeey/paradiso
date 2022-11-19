@@ -1,13 +1,13 @@
 <template>
   <div class="margin-by-fixed">
     <h1>상영중인 영화</h1>
-    <div class="d-flex poster-container">
-      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2"  id="now-playlist-box">
+    <div class="d-flex poster-container" id="now-playlist-box">
+      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2">
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>
-      <button @click="scrollLeft">&lt;</button>
-      <button @click="scrollRight">&gt;</button>
     </div>
+    <button @click="scrollLeft">&lt;</button>
+    <button @click="scrollRight">&gt;</button>
   </div>
 </template>
 
@@ -52,9 +52,11 @@ export default {
       this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
     },
     scrollLeft() {
+      console.log(this)
+      document.getElementById('now-playlist-box').scrollLeft -= 200;
     },
     scrollRight() {
-
+      document.getElementById('now-playlist-box').scrollLeft += 200;
     }
   }
 }
@@ -63,6 +65,7 @@ export default {
 <style>
 .poster-container{
  overflow-x: auto;
+ scroll-behavior: smooth;
 }
 .poster-container::-webkit-scrollbar{
   display: none;
