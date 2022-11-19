@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div id="comment-item">
     <p>
       <router-link :to="{ name: 'ProfileView', params: { nickname: comment.user.nickname} }">{{ comment.user.nickname }}: </router-link>
       {{ comment.content }} | 좋아요 개수 : {{ likecount }}
       <button @click="likeComment" v-show="!islike">좋아요</button>
       <button @click="likeComment" v-show="islike">좋아요 취소</button>
+      <button @click="deleteComment">삭제</button>
     </p>
   </div>
 </template>
@@ -45,6 +46,25 @@ export default {
         this.$router.push({ name: 'LogInView' })
       }
   
+    },
+    deleteComment() {
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        axios({
+          method: 'delete',
+          url: `http://127.0.0.1:8000/movies/comments/${this.comment.id}/`,
+          headers: {'Authorization': `Bearer ${token}`},
+        })
+        .then(() => {
+          document.getElementById('comment-item').remove()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      } else {
+        alert('로그인이 필요합니다')
+        this.$router.push({ name: 'LogInView' })
+      }
     }
   },
   created() {
