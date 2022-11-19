@@ -1,5 +1,5 @@
 <template>
-  <div @click="goToMovie" style="height: 600px">  
+  <div @click="goToMovie" class="position-relative h-25">
     <img :src="imgurl + playmovie.backdrop_path" class="d-block w-100" alt="...">
     <p class="play-list-title position-absolute">{{ playmovie.title }}</p>
   </div>

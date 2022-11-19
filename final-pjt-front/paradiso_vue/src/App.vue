@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg bg-light w-100 position-fixed">
+    <nav class="navbar navbar-expand-lg position-fixed" style="width:70%">
       <div class="container-fluid">
         <router-link class="navbar-brand" :to="{ name: 'MovieView' }">
           <img src="./assets/logo.png" alt="Bootstrap" width="30" height="24">
@@ -92,12 +92,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #2c3e50;
+  padding-left: 15%;
+  padding-right: 15%;
 }
 
 nav{
   z-index: 9999;
+  background-color: rgb(31, 135, 195);
 }
 
+.nav-link{
+  color: white;
+}
 .margin-by-fixed {
   padding-top: 56px;
 }
