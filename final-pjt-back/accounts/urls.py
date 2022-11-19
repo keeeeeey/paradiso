@@ -6,7 +6,7 @@ urlpatterns = [
     path("idcheck/<username>", views.idCheck),
     path("emailcheck/<email>", views.emailCheck),
     path("nicknamecheck/<nickname>", views.nicknameCheck),
-    path("profile/<username>/", views.profile),
+    path("profile/<nickname>/", views.profile),
     path("<int:user_id>/follow/", views.follow),
     path("<nickname>/isfollow/", views.isFollow),
     path("<nickname>/followings", views.getFollowings),

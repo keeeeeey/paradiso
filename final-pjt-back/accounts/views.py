@@ -27,9 +27,9 @@ def signup(request):
 
 
 @api_view(['GET'])
-def profile(request, username):
+def profile(request, nickname):
     User = get_user_model()
-    person = get_object_or_404(User, username=username)
+    person = get_object_or_404(User, nickname=nickname)
     profileSerializer = ProfileSerializer(person)
 
     movies = person.like_movies.all()
@@ -90,10 +90,15 @@ def commentIsLike(request, comment_id):
 @api_view(['GET'])
 def isFollow(request, nickname):
     if request.user.is_authenticated:
-        if request.user.followings.filter(nickname=nickname).exists():
-            return Response({'is_followed': True})
+        if request.user.nickname == nickname:
+            is_mypage = True
         else:
-            return Response({'is_followed': False})
+            is_mypage = False
+
+        if request.user.followings.filter(nickname=nickname).exists():
+            return Response({'is_followed': True, 'is_mypage': is_mypage})
+        else:
+            return Response({'is_followed': False, 'is_mypage': is_mypage})
 
 
 @api_view(['GET'])

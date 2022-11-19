@@ -48,6 +48,7 @@ export default {
         }
       })
         .then((res) => {
+          this.$store.dispatch("save_user", res.data)
           localStorage.setItem("accessToken", res.data.access)
           this.$emit("Login")
 

@@ -6,8 +6,10 @@
 
       <div v-if="totalData">
         팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
-        <button @click="follow" v-if="!isfollow" class="btn btn-primary">팔로우</button>
-        <button @click="follow" v-if="isfollow" class="btn btn-primary">언팔로우</button>
+        <div v-if="!isMypage">
+          <button @click="follow" v-if="!isfollow" class="btn btn-primary">팔로우</button>
+          <button @click="follow" v-if="isfollow" class="btn btn-primary">언팔로우</button>
+        </div>
       </div>
       <br>
       <h2>좋아하는 영화</h2>
@@ -36,6 +38,7 @@ export default {
         totaldata: null,
         isfollow: false,
         followrcount: null,
+        isMypage: false,
       }
     },
     computed: {
@@ -62,6 +65,7 @@ export default {
         })
         .then(res => {
           this.isfollow = res.data.is_followed
+          this.isMypage = res.data.is_mypage
         })
       } else {
         this.isfollow = false
