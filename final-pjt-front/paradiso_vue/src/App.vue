@@ -17,7 +17,7 @@
               <router-link class="nav-link" :to="{ name: 'SignUpView' }">SignUpPage</router-link>
             </li>
             <li v-else class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'SignUpView' }">MyPage</router-link>
+              <router-link class="nav-link" :to="{ name: 'ProfileView', params: { nickname: userInfo?.nickname } }">MyPage</router-link>
             </li>
             <li v-if="!isLoggedIn" class="nav-item">
               <router-link class="nav-link" :to="{ name: 'LogInView' }">LogInPage</router-link>
@@ -54,12 +54,18 @@
 
 <script>
 
+
 export default {
   name: 'App',
   data() {
     return {
       movies: null,
       isLoggedIn: false,
+    }
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.user
     }
   },
   created: function() {
@@ -70,7 +76,9 @@ export default {
   },
   methods: {
     LogOut() {
+      this.$store.dispatch("delete_user")
       localStorage.removeItem("accessToken")
+      localStorage.removeItem("vuex")
       this.isLoggedIn = false
     }
   }

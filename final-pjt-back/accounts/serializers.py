@@ -28,6 +28,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         
         # response에 추가하고 싶은 key값들 추가
         data['username'] = self.user.username
+        data['email'] = self.user.email
+        data['nickname'] = self.user.nickname
         data['refresh'] = str(token)
         data['access'] = str(token.access_token)
         data['isFirst'] = self.user.isFirst
