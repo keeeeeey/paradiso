@@ -1,9 +1,11 @@
 <template>
   <div id="select-movie-view" class="margin-by-fixed">
-    <h1>SelectMovieView</h1>
+    <h1 class="my-5">좋아하는 영화를 선택해주세요.</h1>
     <form @submit.prevent="submitFavorite">
-      <input type="submit" class="btn btn-primary" value="선택완료">
-      <div class="row">
+      <div class="favorit-select-btn-box">
+        <input type="submit" class="btn btn-primary" value="선택완료">
+      </div>
+      <div class="row" style="margin: 0">
         <div v-for="movie in movies" :key="movie.id" :id="movie.id" class="select-movie-box p-0 col-2">
           <img :src="IMG_URL + movie.poster_path" alt="" :id="movie.id + 'img'" class="mw-100" style="height: 100%" @click="selectFavoriteMovie(movie.id)">
         </div>
@@ -106,5 +108,17 @@ export default {
 
 .select-movie-box img {
   transition: all 0.2s linear;
+}
+
+.favorit-select-btn-box {
+  /* border: solid 2px #1f87c3;
+  border-radius: 5px; */
+  width: 150px;
+  position: fixed;
+  top: 25%;
+  right: 1%;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px;
 }
 </style>

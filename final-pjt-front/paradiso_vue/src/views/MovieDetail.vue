@@ -3,8 +3,8 @@
     <div class="detail-nav" :style="{ backgroundImage : `url(https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${this.moviedata?.backdrop_path})`}" v-if="moviedata">
       <div class="detail-nav-box d-flex">
         <img :src="imgurl + moviedata?.poster_path" alt="" v-if="moviedata" class="col-3 m-3">
-        <div>
-          <p><span>{{ moviedata?.title }}</span><span> ({{ releaseYear }})</span></p>
+        <div class="m-3">
+          <p><span>{{ moviedata?.title }}</span><span> ({{ releaseYear }})</span><i class="fa-regular fa-heart m-1"></i></p>
           <p>{{ releaseYear }}/{{ releaseMonth }}/{{ releaseDay }} ● {{ genreList }} ● {{ runtimeHour }}h {{ runtimeMinute }}m</p>
           점수 
           <div class="progress w-75">
@@ -17,9 +17,14 @@
       </div>
     </div>
     <div class="d-flex justify-content-center my-5 align-items-center">
-      <label for="comment">댓글: </label>
-      <input type="text" v-model="comment">
-      <button @click="inputComment">작성</button>
+      <!-- <label for="comment">댓글 : </label> -->
+      <!-- <input type="text" v-model="comment"> -->
+      <div class="input-group flex-nowrap w-75">
+        <span class="input-group-text" id="addon-wrapping">댓글</span>
+        <input v-model="comment" type="text" class="form-control">
+        <button @click="inputComment" class="input-group-text" id="addon-wrapping">등록하기</button>
+      </div>
+      <!-- <button @click="inputComment">작성</button> -->
     </div>
     <CommentList :movieid="movie_id" :key="componenetRerender"/>
   </div>
@@ -119,7 +124,6 @@ export default {
 }
 .detail-nav{
   color: white;
-
 }
 .detail-nav-box{
   background-image: linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) 150px, rgba(31.5, 31.5, 31.5, 0.84) 100%);

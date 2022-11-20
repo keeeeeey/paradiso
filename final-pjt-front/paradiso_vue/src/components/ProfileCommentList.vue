@@ -1,7 +1,7 @@
 <template>
     <div style="text-align: center">
         
-        <div class="w-50 mx-auto">
+        <div class="w-75 mx-auto">
             <div v-for="comment in commentList" :key="comment.id">
                 <ProfileCommentListItem :comment="comment" />
                 <hr>

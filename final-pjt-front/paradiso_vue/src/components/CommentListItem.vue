@@ -1,18 +1,23 @@
 <template>
   <div id="comment-item">
-      <p @click="goToProfile(comment.user.nickname)" style="text-align:left;"><b>{{ comment.user.nickname }}</b></p>
-      <div class="d-flex justify-content-between">
-          <span>{{ comment.content }}</span>
-          <span class="d-flex flex-column">
-            <div>
-              <button @click="deleteComment" class="btn btn-danger comment-delete-button">삭제</button>
-              <button @click="likeComment" v-show="!islike" class="btn btn-primary comment-like-button">좋아요</button>
-              <button @click="likeComment" v-show="islike" class="btn btn-primary comment-like-button">좋아요 취소</button>
-            </div>
-            <span style="text-align:right">좋아요 수 : {{ likecount }}</span>
-          </span>
-          
-      </div>
+    <p @click="goToProfile(comment.user.nickname)" style="text-align:left;"><b>{{ comment.user.nickname }}</b></p>
+    <div class="d-flex justify-content-between">
+      <span>{{ comment.content }}</span>
+      <span class="d-flex flex-column">
+        <div>
+          <i @click="updateCommentForm" v-if="user_nickname === comment.user.nickname" class="fa-solid fa-pen m-1"></i>
+          <i @click="deleteComment" v-if="user_nickname === comment.user.nickname" class="fa-solid fa-trash m-1"></i>
+          <i @click="likeComment" v-show="!islike" class="fa-regular fa-heart m-1"></i>
+          <i @click="likeComment" v-show="islike" class="fa-solid fa-heart m-1" style="color: red;"></i>
+          <span class="m-1" style="text-align:right">{{ likecount }}</span>
+        </div>
+      </span>  
+    </div>
+    <div class="input-group flex-nowrap w-100 mt-3" v-show="updateForm">
+      <input v-model="updatedComment" type="text" class="form-control">
+      <button @click="updateComment" class="input-group-text" id="addon-wrapping">수정하기</button>
+    </div>
+    <hr>
   </div>
 </template>
 
@@ -25,10 +30,18 @@ export default {
   props: {
     comment: Object
   },
+  computed: {
+    user_nickname() {
+      return this.$store.state.user.nickname
+    }
+  },
   data() {
     return {
       likecount: this.comment.like_users_count,
-      islike: false
+      islike: false,
+      updateForm: false,
+      updatedComment: this.comment.content,
+      componentRerender: 0,
     }
   },
   methods: {
@@ -72,6 +85,30 @@ export default {
         this.$router.push({ name: 'LogInView' })
       }
     },
+    updateCommentForm() {
+      this.updateForm = !this.updateForm
+    },
+    updateComment() {
+      const updatedComment = this.updatedComment
+      const token = localStorage.getItem('accessToken')
+      
+      axios({
+        method: "put",
+        url: `http://127.0.0.1:8000/movies/comments/${this.comment.id}/`,
+        headers: {'Authorization': `Bearer ${token}`},
+        data: {
+          content: updatedComment,
+        }
+      })
+        .then((res) => {
+          console.log(res)
+          this.updateForm = false
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+    },
     goToProfile(nickname) {
       this.$router.push({ name: "ProfileView", params: {"nickname": nickname} })
     }
@@ -95,9 +132,6 @@ export default {
 </script>
 
 <style>
-.comment-like-button{
-
-}
 .comment-delete-button{
   margin-top: 0;
 }

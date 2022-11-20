@@ -1,8 +1,7 @@
 <template>
     <div>
-      <div class="w-50 mx-auto">
+      <div class="w-75 mx-auto">
         <CommentListItem v-for="comment in comments" :key="comment.id" :comment="comment"/>
-        <hr>
       </div>
     </div>
 </template>
@@ -32,6 +31,7 @@ export default {
     })
     .then(res => {
       this.comments = res.data
+      console.log(res.data)
     })
     .catch(() => {
       console.log('댓글 가져오기 실패')
