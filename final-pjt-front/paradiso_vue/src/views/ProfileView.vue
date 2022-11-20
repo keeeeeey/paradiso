@@ -1,7 +1,9 @@
 <template>
   <div class="margin-by-fixed">
     <div class="profile-data-box">
-      <img src="../assets/logo.png" alt="profile-img" id="profile-img" style="margin-bottom: 20px">
+      <div class="profile-img-box">
+        <img src="../assets/logo.png" alt="profile-img" class="profile-img">
+      </div>
       <div class="d-flex justify-content-center align-items-center">
         <h1>{{ nickname }}</h1>
         <div v-if="!isMypage" style="margin-left: 10px;">
@@ -99,10 +101,19 @@ export default {
 </script>
 
 <style>
-#profile-img {
-  width: 250px;
-  border: solid 2px gray;
+.profile-img-box {
+  width: 25%;
+  border: solid 2px gray; 
   border-radius: 50%;
+  margin: 10px auto;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.profile-img {
+  width: 100%;
 }
 
 .profile-data-box {

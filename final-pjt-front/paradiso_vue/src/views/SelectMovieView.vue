@@ -2,34 +2,45 @@
   <div id="select-movie-view" class="margin-by-fixed">
     <h1>SelectMovieView</h1>
     <form @submit.prevent="submitFavorite">
-      <input type="text" class="btn btn-primary" value="선택완료">
+      <input type="submit" class="btn btn-primary" value="선택완료">
       <div class="row">
-        <SelectMovieItem v-for="movie in movies" :key="movie.id" :movie=movie class="p-0 col-2" @from-select-movie-item=fromSelectMovieItem />
+        <div v-for="movie in movies" :key="movie.id" :id="movie.id" class="select-movie-box p-0 col-2">
+          <img :src="IMG_URL + movie.poster_path" alt="" :id="movie.id + 'img'" class="mw-100" style="height: 100%" @click="selectFavoriteMovie(movie.id)">
+        </div>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import SelectMovieItem from "@/components/SelectMovieItem"
 import axios from "axios"
 const API_URL = "http://127.0.0.1:8000"
 
 export default {
     name: "SelectMovieView",
-    components: {
-      SelectMovieItem
-    },
     data() {
       return {
         movies: null,
-        my_favorite_movies: []
+        my_favorite_movies: [],
+        IMG_URL: "https://image.tmdb.org/t/p/original",
       }
     },
     methods: {
-      fromSelectMovieItem(id) {
+      selectFavoriteMovie(id) {
         if (this.my_favorite_movies.length === 10) {
           alert("영화 선택은 10개 까지만 가능합니다.")
+          return false
+        }
+
+        const selectedMovie = document.getElementById(id)
+        const selectedMovieImg = document.getElementById(id + "img")
+        
+        if (selectedMovie.className.includes("checked-box")) {
+          selectedMovie.classList.remove("checked-box")
+          selectedMovieImg.classList.remove("checked")
+        } else {
+          selectedMovie.classList.add("checked-box")
+          selectedMovieImg.classList.add("checked")
         }
 
         if (this.my_favorite_movies.includes(id)) {
@@ -41,7 +52,25 @@ export default {
           console.log(this.my_favorite_movies)
         }
 
-        
+      },
+
+      submitFavorite() {
+        const my_favorite = this.my_favorite_movies
+        const token = localStorage.getItem('accessToken')
+
+        axios({
+          method: "post",
+          url: `${API_URL}/accounts/addfavoritemovies/`,
+          headers: {'Authorization': `Bearer ${token}`},
+          data: { my_favorite },
+        })
+          .then(() => {
+            console.log("성공")
+            this.$router.push({ name: "MovieView" })
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     },
     created() {
@@ -61,5 +90,21 @@ export default {
 </script>
 
 <style>
+.checked-box {
+    box-shadow: 0 0 .2rem #fff, 0 0 .2rem #fff, 0 0 2rem #1f87c3, 0 0 2rem #1f87c3, 0 0 2rem #1f87c3;
+    z-index: 1;
+}
 
+.checked {
+  scale: 1.1;
+}
+
+.select-movie-box {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.select-movie-box img {
+  transition: all 0.2s linear;
+}
 </style>
