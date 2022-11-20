@@ -1,11 +1,13 @@
 <template>
   <div class="margin-by-fixed">
     <h1>상영 예정 영화</h1>
-    <div class="d-flex poster-container">
+    <div class="d-flex poster-container" id="upcoming-movielist">
       <div v-for="upcomingmovie in upcominglist" :key="upcomingmovie.id" class="col-2 take-movies">
         <UpcomingMovieListItem :upcomingmovie="upcomingmovie" @click.native="goToMovie(upcomingmovie.id)" style="cursor: pointer;"/>
       </div>
     </div>
+    <button @click="scrollLeft">&lt;</button>
+    <button @click="scrollRight">&gt;</button>
   </div>
 </template>
 
@@ -39,6 +41,14 @@ export default {
     methods: {
     goToMovie(pk) {
       this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
+    },
+    scrollLeft() {
+      const width = document.getElementById('upcoming-movielist').clientWidth
+      document.getElementById('upcoming-movielist').scrollLeft -= width;
+    },
+    scrollRight() {
+      const width = document.getElementById('upcoming-movielist').clientWidth
+      document.getElementById('upcoming-movielist').scrollLeft += width;
     }
   }
 }
