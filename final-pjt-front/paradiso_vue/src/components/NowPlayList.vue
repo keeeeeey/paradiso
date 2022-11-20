@@ -2,7 +2,7 @@
   <div class="margin-by-fixed">
     <h1>상영중인 영화</h1>
     <div class="d-flex poster-container" id="now-playlist-box">
-      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2">
+      <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2" id="now-playlist-item">
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>
     </div>
@@ -52,11 +52,12 @@ export default {
       this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
     },
     scrollLeft() {
-      console.log(this)
-      document.getElementById('now-playlist-box').scrollLeft -= 200;
+      const width = document.getElementById('now-playlist-box').clientWidth
+      document.getElementById('now-playlist-box').scrollLeft -= width;
     },
     scrollRight() {
-      document.getElementById('now-playlist-box').scrollLeft += 200;
+      const width = document.getElementById('now-playlist-box').clientWidth
+      document.getElementById('now-playlist-box').scrollLeft += width;
     }
   }
 }
