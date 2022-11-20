@@ -1,6 +1,6 @@
 <template>
   <div id="comment-item">
-    <p @click="goToProfile(comment.user.nickname)" style="text-align:left;"><b>{{ comment.user.nickname }}</b></p>
+    <p @click="goToProfile(comment.user.nickname)" style="text-align:left; cursor: pointer"><b>{{ comment.user.nickname }}</b></p>
     <div class="d-flex justify-content-between">
       <span>{{ comment.content }}</span>
       <span class="d-flex flex-column">
