@@ -1,13 +1,11 @@
 <template>
-  <div class="margin-by-fixed">
+  <div class="margin-by-fixed" style="position: relative">
     <h1>상영중인 영화</h1>
     <div class="d-flex poster-container" id="now-playlist-box">
       <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2" id="now-playlist-item">
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>
     </div>
-    <button @click="scrollLeft">&lt;</button>
-    <button @click="scrollRight">&gt;</button>
   </div>
 </template>
 
@@ -68,7 +66,24 @@ export default {
  overflow-x: auto;
  scroll-behavior: smooth;
 }
+
 .poster-container::-webkit-scrollbar{
   display: none;
+}
+
+.arrow-left {
+  color: white;
+  z-index: 9999;
+  position: absolute;
+  top: 57.5%;
+  left: 2.5%;
+}
+
+.arrow-right {
+  color: white;
+  z-index: 9999;
+  position: absolute;
+  top: 57.5%;
+  right: 2.5%;
 }
 </style>
