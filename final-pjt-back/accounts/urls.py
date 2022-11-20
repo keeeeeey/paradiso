@@ -13,4 +13,5 @@ urlpatterns = [
     path("<nickname>/followers", views.getFollowers),
     path("<int:movie_id>/movies/islike/", views.movieIsLike),
     path("<int:comment_id>/comments/islike/", views.commentIsLike),
+    path("addfavoritemovies/", views.createFavorite),
 ]

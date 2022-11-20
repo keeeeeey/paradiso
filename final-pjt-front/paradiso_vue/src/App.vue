@@ -80,6 +80,7 @@ export default {
       localStorage.removeItem("accessToken")
       localStorage.removeItem("vuex")
       this.isLoggedIn = false
+      this.$router.push({ name: "LogInView" })
     }
   }
 }

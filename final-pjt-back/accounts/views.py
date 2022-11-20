@@ -151,3 +151,14 @@ def nicknameCheck(request, nickname):
         return Response({"nickname_exist" : True})
     else:
         return Response({"nickname_exist" : False})
+
+
+@api_view(['POST'])
+def createFavorite(request):
+    if request.user.is_authenticated:
+        for movie in request.data["my_favorite"]:
+            request.user.favorite_movies.add(movie)
+            request.user.isFirst = False
+            request.user.save()
+
+    return Response({"message" : "좋아하는 영화 등록 성공"}, status=status.HTTP_200_OK)
