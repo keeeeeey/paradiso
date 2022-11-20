@@ -1,13 +1,13 @@
 <template>
-  <div class="margin-by-fixed">
+  <div class="margin-by-fixed" style="position: relative">
     <h1>상영 예정 영화</h1>
     <div class="d-flex poster-container" id="upcoming-movielist">
       <div v-for="upcomingmovie in upcominglist" :key="upcomingmovie.id" class="col-2 take-movies">
         <UpcomingMovieListItem :upcomingmovie="upcomingmovie" @click.native="goToMovie(upcomingmovie.id)" style="cursor: pointer;"/>
       </div>
     </div>
-    <button @click="scrollLeft">&lt;</button>
-    <button @click="scrollRight">&gt;</button>
+    <i class="fa-solid fa-chevron-left fa-2x arrow-left" @click="scrollLeft"></i>
+    <i class="fa-solid fa-chevron-right fa-2x arrow-right" @click="scrollRight"></i>
   </div>
 </template>
 
