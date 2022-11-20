@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="min-vh-100">
     <nav class="navbar navbar-expand-lg position-fixed" style="width:70%">
       <div class="container-fluid">
         <router-link class="navbar-brand" :to="{ name: 'MovieView' }">
@@ -97,7 +97,6 @@ export default {
   /* padding-left: 15%;
   padding-right: 15%; */
   width: 70%;
-  height: 100%;
   margin: 0 auto;
   background-color: white;
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="w-75 mx-auto">
-        <CommentListItem v-for="comment in comments" :key="comment.id" :comment="comment"/>
+        <CommentListItem v-for="comment in comments" :key="comment.id" :comment="comment" @updatecomment="updateComment"/>
       </div>
     </div>
 </template>
@@ -37,7 +37,11 @@ export default {
       console.log('댓글 가져오기 실패')
     })
   },
-
+  methods: {
+    updateComment() {
+      this.$emit('updatecomment')
+    }
+  }
 }
 </script>
 
