@@ -26,7 +26,7 @@
       </div>
       <!-- <button @click="inputComment">작성</button> -->
     </div>
-    <CommentList :movieid="movie_id" :key="componenetRerender"/>
+    <CommentList :movieid="movie_id" :key="componenetRerender" @updatecomment="updateComment"/>
   </div>
 </template>
 <script>
@@ -104,6 +104,7 @@ export default {
           })
           .then(() => {
             this.componenetRerender += 1
+            this.comment = null
           })
           .catch(err => {
             console.log(err)
@@ -113,6 +114,9 @@ export default {
           this.$router.push({ name: 'LogInView' })
         }
         
+      },
+      updateComment() {
+        this.componenetRerender += 1
       }
     }
 }

@@ -103,6 +103,7 @@ export default {
         .then((res) => {
           console.log(res)
           this.updateForm = false
+          this.$emit('updatecomment')
         })
         .catch((err) => {
           console.log(err)
