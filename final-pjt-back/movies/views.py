@@ -110,3 +110,11 @@ def genre_list(request):
     genres = get_list_or_404(Genre)
     serializer = GenreSerializer(genres, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_movies_by_genre(request, genre, limit, offset):
+    genre = Genre.objects.get(name=genre)
+    movies = genre.movie_set.all()[offset:limit]
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)

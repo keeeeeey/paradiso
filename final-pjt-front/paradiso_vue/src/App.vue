@@ -25,24 +25,17 @@
             <li v-else class="nav-item">
               <router-link class="nav-link" @click.native="LogOut" :to="{ name: 'MovieView' }"><b>SIGN OUT</b></router-link>
             </li>
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
+            <li class="nav-item dropdown">
+              <a id="genre-nav-bar" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold">
+                GENRES
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li v-for="genre in genres" :key="genre.id" @click="movieByGenre(genre.name)"><span class="dropdown-item">{{ genre.name }}</span></li>
               </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li> -->
           </ul>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
             <i type="submit" class="fa-solid fa-magnifying-glass fa-2x nav-icon"></i>
           </form>
         </div>
@@ -54,14 +47,15 @@
 </template>
 
 <script>
+import axios from "axios"
 
 
 export default {
   name: 'App',
   data() {
     return {
-      movies: null,
       isLoggedIn: false,
+      genres: null,
     }
   },
   computed: {
@@ -74,6 +68,17 @@ export default {
     if (token) {
       this.isLoggedIn = true;
     }
+
+    axios({
+      method: "get",
+      url: "http://127.0.0.1:8000/movies/genres/"
+    })
+      .then((res) => {
+        this.genres = res.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
   methods: {
     LogOut() {
@@ -82,6 +87,12 @@ export default {
       localStorage.removeItem("vuex")
       this.isLoggedIn = false
       this.$router.push({ name: "LogInView" })
+    },
+
+    movieByGenre(genre) {
+      const genrebar = document.getElementById("genre-nav-bar")
+      genrebar.innerText = genre
+      this.$router.push({ name: "MoviesByGenreView", params: { "genre": genre } })
     }
   }
 }
@@ -92,10 +103,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
-  /* padding-left: 15%;
-  padding-right: 15%; */
   width: 70%;
   margin: 0 auto;
   background-color: white;

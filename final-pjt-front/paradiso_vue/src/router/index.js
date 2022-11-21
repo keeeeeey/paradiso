@@ -6,6 +6,7 @@ import MovieView from '@/views/MovieView'
 import SelectMovieView from '@/views/SelectMovieView'
 import MovieDetial from '@/views/MovieDetail'
 import ProfileView from '@/views/ProfileView'
+import MoviesByGenreView from '@/views/MoviesByGenreView'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,12 @@ const routes = [
     name: 'ProfileView',
     component: ProfileView
   },
+
+  {
+    path: '/movies/genre/:genre',
+    name: 'MoviesByGenreView',
+    component: MoviesByGenreView
+  }
 ]
 
 const router = new VueRouter({

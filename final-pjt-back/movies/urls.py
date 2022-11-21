@@ -10,4 +10,5 @@ urlpatterns = [
     path('comments/<int:comment_id>/', views.comment),
     path('comments/<int:comment_id>/likes/', views.comment_likes),
     path('genres/', views.genre_list),
+    path('genre/<genre>/<int:limit>/<int:offset>/', views.get_movies_by_genre),
 ]
