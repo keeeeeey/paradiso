@@ -4,9 +4,10 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from movies.serializers import MovieSerializer, CommentSerializer
-from movies.models import Movie
+from movies.models import Movie, Genre
+import random
 
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import UserSerializer, ProfileSerializer, UserFavoriteSerializer
 
 
 @api_view(['POST'])
@@ -165,3 +166,26 @@ def createFavorite(request):
             request.user.save()
 
     return Response({"message" : "좋아하는 영화 등록 성공"}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def userFavorites(request):
+    # me = request.user
+    # serializer = UserFavoriteSerializer(me)
+
+    my_favorites = request.user.favorite_movies.all()
+    my_genres = []
+    similar_movies = set()
+    for favorite in my_favorites:
+        movie = get_object_or_404(Movie, pk=favorite.id)
+        for genre in movie.genres.all():
+            if genre.id not in my_genres:
+                my_genres.append(genre.id)
+                temp_genre = Genre.objects.get(pk=genre.id)
+                similar_list = temp_genre.movie_set.order_by("?")
+                for i in range(3):
+                    similar_movies.add(similar_list[i])
+
+    serializer = MovieSerializer(similar_movies, many=True)
+
+    return Response(serializer.data)

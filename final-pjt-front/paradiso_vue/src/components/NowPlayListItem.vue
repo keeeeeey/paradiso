@@ -17,8 +17,8 @@ export default {
     },
     data() {
       return {
-        likecount: this.playmovie,
-        islike: false,
+        // likecount: this.playmovie,
+        // islike: false,
         imgurl: 'https://image.tmdb.org/t/p/original'
       }
     },

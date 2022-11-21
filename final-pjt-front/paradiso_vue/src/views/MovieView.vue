@@ -1,6 +1,7 @@
 <template>
   <div id="movie-view" class="margin-by-fixed">
     <TopRatedList/>
+    <MyFavoriteList v-if="isLoggedIn"/>
     <NowPlayList/>
     <UpcomingMovieList/>
   </div>
@@ -10,6 +11,7 @@
 import TopRatedList from '@/components/TopRatedList'
 import NowPlayList from '@/components/NowPlayList'
 import UpcomingMovieList from '@/components/UpcomingMovieList'
+import MyFavoriteList from '@/components/MyFavoriteList'
 
 export default {
     name: "MovieView",
@@ -17,11 +19,11 @@ export default {
       TopRatedList,
       NowPlayList,
       UpcomingMovieList,
+      MyFavoriteList,
     },
     data() {
       return{
-        comment: null,
-        movie_id: 1,
+        isLoggedIn: localStorage.getItem("accessToken")
       }
     },
 }
