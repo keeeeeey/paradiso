@@ -33,7 +33,7 @@
           </div>
           <div class="modal-body">
             <form method="post" enctype="multipart/form-data">
-              <input type="file" id="chooseFile" name="chooseFile" @change="loadFile(this)">
+              <input type="file" id="chooseFile" name="chooseFile" ref="serveyImage" @change="loadFile()">
             </form>
             <div class="fileContainer">
               <div class="fileInput">
@@ -127,11 +127,10 @@ export default {
         }
       },
 
-      loadFile(input) {
-        console.log(input)
-        let file = input.files[0];
+      loadFile() {
+        console.log(this.$refs)
         let name = document.getElementById('fileName');
-        name.textContent = file.name;
+        name.textContent = this.$refs.serveyImage.files[0].name;
       }
     }
 }
