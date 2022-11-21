@@ -9,10 +9,17 @@ from .models import Movie, Comment, Genre
 
 # Create your views here.
 @api_view(['GET'])
-def movie_list(request):
-    movies = get_list_or_404(Movie)
+def movie_list(request, limit, offset):
+    movies = get_list_or_404(Movie)[offset:limit]
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def top_rated_movies(request):
+    movies = Movie.objects.order_by("vote_average")[:20]
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)    
 
 
 @api_view(['GET'])

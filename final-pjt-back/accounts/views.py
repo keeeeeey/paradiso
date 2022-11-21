@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from movies.serializers import MovieSerializer, CommentSerializer
+from movies.models import Movie
 
 from .serializers import UserSerializer, ProfileSerializer
 
@@ -75,11 +76,13 @@ def follow(request, user_id):
 
 @api_view(['GET'])
 def movieIsLike(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
     if request.user.is_authenticated:
+        like_count = movie.like_users.count()
         if request.user.like_movies.filter(pk=movie_id).exists():
-            return Response({'is_liked': True})
+            return Response({'is_liked': True, 'like_count': like_count})
         else:
-            return Response({'is_liked': False})
+            return Response({'is_liked': False, 'like_count': like_count})
 
 
 @api_view(['GET'])

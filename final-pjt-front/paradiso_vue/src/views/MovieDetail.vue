@@ -4,7 +4,13 @@
       <div class="detail-nav-box d-flex">
         <img :src="imgurl + moviedata?.poster_path" alt="" v-if="moviedata" class="col-3 m-3">
         <div class="m-3">
-          <p><span>{{ moviedata?.title }}</span><span> ({{ releaseYear }})</span><i class="fa-regular fa-heart m-1"></i></p>
+          <p>
+            <span>{{ moviedata?.title }}</span>
+            <span> ({{ releaseYear }})</span>
+            <i @click="movieLike" v-show="!isliked" class="fa-regular fa-heart m-1"></i>
+            <i @click="movieLike" v-show="isliked" class="fa-solid fa-heart m-1" style="color: red"></i>
+            <span> {{ like_count }}</span>
+          </p>
           <p>{{ releaseYear }}/{{ releaseMonth }}/{{ releaseDay }} ● {{ genreList }} ● {{ runtimeHour }}h {{ runtimeMinute }}m</p>
           점수 
           <div class="progress w-75">
@@ -32,6 +38,7 @@
 <script>
 import axios from 'axios'
 import CommentList from '@/components/CommentList.vue'
+const token = localStorage.getItem('accessToken')
 
 export default {
     name: 'MovieDetail',
@@ -41,7 +48,9 @@ export default {
             comment: null,
             moviedata: null,
             imgurl: 'https://image.tmdb.org/t/p/original',
-            componenetRerender: 0
+            componenetRerender: 0,
+            isliked: false,
+            like_count: 0,
         }
     },
     computed: {
@@ -77,21 +86,56 @@ export default {
       CommentList,
     },
     created() {
+      axios({
+          method: 'get',
+          url: `https://api.themoviedb.org/3/movie/${this.movie_id}?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR`
+      })
+      .then(res => {
+        console.log(res.data)
+          this.moviedata = res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      if (token) {
         axios({
-            method: 'get',
-            url: `https://api.themoviedb.org/3/movie/${this.movie_id}?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR`
+          method: "get",
+          url: `http://127.0.0.1:8000/accounts/${this.movie_id}/movies/islike/`,
+          headers: {'Authorization': `Bearer ${token}`},
         })
-        .then(res => {
-          console.log(res.data)
-            this.moviedata = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
+          .then((res) => {
+            this.isliked = res.data.is_liked
+            this.like_count = res.data.like_count
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     },
     methods: {
+      movieLike() {
+        if (token) {
+          axios({
+            method: "post",
+            url: `http://127.0.0.1:8000/movies/${this.movie_id}/likes/`,
+            headers: {'Authorization': `Bearer ${token}`},
+          })
+            .then((res) => {
+              console.log(res.data)
+              this.isliked = res.data.is_liked
+              this.like_count = res.data.like_users_count
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        } else {
+          alert('로그인이 필요합니다.')
+          this.$router.push({ name: 'LogInView' })
+        }
+        
+      },
       inputComment() {
-        const token = localStorage.getItem('accessToken')
         if (token) {
           axios({
           method: 'post',

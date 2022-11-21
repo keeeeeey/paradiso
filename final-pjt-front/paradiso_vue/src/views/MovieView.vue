@@ -24,9 +24,6 @@ export default {
         movie_id: 1,
       }
     },
-    created() {
-      
-    }
 }
 </script>
 

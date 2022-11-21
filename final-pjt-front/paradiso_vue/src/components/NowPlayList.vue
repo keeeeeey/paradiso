@@ -6,6 +6,8 @@
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>
     </div>
+    <i class="fa-solid fa-chevron-left fa-2x arrow-left" @click="scrollLeft"></i>
+    <i class="fa-solid fa-chevron-right fa-2x arrow-right" @click="scrollRight"></i>
   </div>
 </template>
 
@@ -24,16 +26,6 @@ export default {
     }
   },
   created() {
-    axios({
-      method: 'get',
-      url: 'http://127.0.0.1:8000/movies/',
-    })
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
     axios({
       method: 'get',
       url: 'https://api.themoviedb.org/3/movie/now_playing?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR&page=1&region=KR',

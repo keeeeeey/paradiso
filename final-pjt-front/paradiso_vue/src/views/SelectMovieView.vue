@@ -11,20 +11,26 @@
         </div>
       </div>
     </form>
+    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
   </div>
 </template>
 
 <script>
 import axios from "axios"
+import InfiniteLoading from "vue-infinite-loading"
 const API_URL = "http://127.0.0.1:8000"
 
 export default {
     name: "SelectMovieView",
+    components: {
+      InfiniteLoading
+    },
     data() {
       return {
-        movies: null,
+        movies: [],
         my_favorite_movies: [],
         IMG_URL: "https://image.tmdb.org/t/p/original",
+        startindex: 0, 
       }
     },
     methods: {
@@ -73,20 +79,25 @@ export default {
           .catch((err) => {
             console.log(err)
           })
-      }
-    },
-    created() {
-      axios({
-        method: "get",
-        url: `${API_URL}/movies/`,
-      })
-        .then((res) => {
-          console.log(res.data)
-          this.movies = res.data
+      },
+
+      infiniteHandler($state) {
+        console.log(this.startindex)
+        axios({
+          method: "get",
+          url: `${API_URL}/movies/${this.startindex + 40}/${this.startindex}`,
         })
-        .catch((err) => {
-          console.log(err)
-        })
+          .then(({ data }) => {
+            console.log(data.length)
+            if (data.length) {
+              this.startindex += 40;
+              this.movies.push(...data);
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          });
+      },
     }
 }
 </script>
