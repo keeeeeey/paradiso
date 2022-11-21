@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item dropdown">
               <a id="genre-nav-bar" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-weight: bold">
-                GENRES
+                {{ genre }}
               </a>
               <ul class="dropdown-menu">
                 <li v-for="genre in genres" :key="genre.id" @click="movieByGenre(genre.name)"><span class="dropdown-item">{{ genre.name }}</span></li>
@@ -56,6 +56,7 @@ export default {
     return {
       isLoggedIn: false,
       genres: null,
+      genre: "GENRES",
     }
   },
   computed: {
@@ -90,8 +91,7 @@ export default {
     },
 
     movieByGenre(genre) {
-      const genrebar = document.getElementById("genre-nav-bar")
-      genrebar.innerText = genre
+      this.genre = genre
       this.$router.push({ name: "MoviesByGenreView", params: { "genre": genre } })
     }
   }

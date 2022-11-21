@@ -122,8 +122,6 @@ export default {
 }
 
 .favorit-select-btn-box {
-  /* border: solid 2px #1f87c3;
-  border-radius: 5px; */
   width: 150px;
   position: fixed;
   top: 25%;

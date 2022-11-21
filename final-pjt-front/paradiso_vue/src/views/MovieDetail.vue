@@ -5,7 +5,7 @@
         <div class="col-3 p-3">
           <img :src="imgurl + moviedata?.poster_path" alt="" v-if="moviedata" class="w-100 mb-3" @onmouseover="play-video">
           <!-- Button trigger modal -->
-          <button type="button" class="play-btn w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" class="play-btn w-100" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="turnOn">
             예고편
           </button>
         </div>
@@ -42,9 +42,21 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <span style="font-size: large"><b>{{ moviedata.title }} 예고편</b></span>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="turnOff"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body modal-box">
+            <iframe
+                v-if="isTurn"
+                id="youtube-player" 
+                type="text/html"
+                width="100%"
+                height="100%"
+                :src="videourl + videodata?.results[0].key + '?mute=1&autoplay=1'" 
+                frameborder="0"
+                allowfullscreen="allowfullscreen"
+            >
+            </iframe>
           </div>
         </div>
       </div>
@@ -68,7 +80,8 @@ export default {
             isliked: false,
             like_count: 0,
             videodata: null,
-            videourl: "https://www.youtube.com/watch?v="
+            videourl: "https://www.youtube-nocookie.com/embed/",
+            isTurn: false,
         }
     },
     computed: {
@@ -109,8 +122,7 @@ export default {
           url: `https://api.themoviedb.org/3/movie/${this.movie_id}?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR`
       })
       .then(res => {
-        console.log(res.data)
-          this.moviedata = res.data
+        this.moviedata = res.data
       })
       .catch(err => {
         console.log(err)
@@ -137,6 +149,7 @@ export default {
         })
           .then((res) => {
             this.videodata = res.data
+            console.log(this.videodata.results)
           })
     },
     methods: {
@@ -148,7 +161,6 @@ export default {
             headers: {'Authorization': `Bearer ${token}`},
           })
             .then((res) => {
-              console.log(res.data)
               this.isliked = res.data.is_liked
               this.like_count = res.data.like_users_count
             })
@@ -188,7 +200,15 @@ export default {
 
       updateComment() {
         this.componenetRerender += 1
-      },      
+      },
+
+      turnOn() {
+        this.isTurn = true
+      },
+
+      turnOff() {
+        this.isTurn = false
+      }
     }
 }
 </script>
@@ -214,5 +234,10 @@ export default {
   background-color: rgb(31, 135, 195);
   border: solid 1px rgb(31, 135, 195);
   border-radius: 5px;
+}
+
+.modal-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 </style>

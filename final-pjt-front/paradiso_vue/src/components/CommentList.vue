@@ -31,7 +31,6 @@ export default {
     })
     .then(res => {
       this.comments = res.data
-      console.log(res.data)
     })
     .catch(() => {
       console.log('댓글 가져오기 실패')
