@@ -15,4 +15,5 @@ urlpatterns = [
     path("<int:comment_id>/comments/islike/", views.commentIsLike),
     path("addfavoritemovies/", views.createFavorite),
     path("userfavorites/", views.userFavorites),
+    path('mostfavorite/', views.mostFavorite),
 ]

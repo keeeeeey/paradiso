@@ -1,9 +1,9 @@
 <template>
     <div class="margin-by-fixed" style="position: relative">
-      <h1>좋아할만한 영화</h1>
-      <div class="d-flex poster-container" id="my-favorite-box">
-        <div v-for="myFavorite in myFavorites" :key="myFavorite.id" class="col-2" id="my-favorite-item">
-          <MyFavoriteListItem :myFavorite="myFavorite" @click.native="goToMovie(myFavorite.id)" style="cursor:pointer"/>
+      <h1>사람들이 가장 많이 선택한 영화</h1>
+      <div class="d-flex poster-container" id="most-favorite-box">
+        <div v-for="mostFavorite in mostFavorites" :key="mostFavorite.id" class="col-2" id="most-favorite-item">
+          <MostFavoriteListItem :mostFavorite="mostFavorite" @click.native="goToMovie(mostFavorite.id)" style="cursor:pointer"/>
         </div>
       </div>
       <i class="fa-solid fa-chevron-left fa-2x arrow-left" @click="scrollLeft"></i>
@@ -12,47 +12,42 @@
   </template>
   
   <script>
-  import MyFavoriteListItem from '@/components/MyFavoriteListItem'
+  import MostFavoriteListItem from '@/components/MostFavoriteListItem'
   import axios from 'axios'
-  const token = localStorage.getItem('accessToken')
   
   export default {
-    name: 'MyFavoriteList',
+    name: 'MostFavoriteList',
     components: {
-      MyFavoriteListItem,
+        MostFavoriteListItem,
     },
     data() {
       return {
-        myFavorites: null,
+        mostFavorites: null,
       }
     },
     created() {
-      if (token) {
         axios({
             method: "get",
-            url: "http://127.0.0.1:8000/accounts/userfavorites/",
-            headers: {'Authorization': `Bearer ${token}`},
+            url: "http://127.0.0.1:8000/accounts/mostfavorite/",
         })
             .then((res) => {
-                console.log(res.data)
-                this.myFavorites = res.data
+                this.mostFavorites = res.data
             })
             .catch((err) => {
                 console.log(err)
             })
-      }
     },
     methods: {
       goToMovie(pk) {
         this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
       },
       scrollLeft() {
-        const width = document.getElementById('my-favorite-box').clientWidth
-        document.getElementById('my-favorite-box').scrollLeft -= width;
+        const width = document.getElementById('most-favorite-box').clientWidth
+        document.getElementById('most-favorite-box').scrollLeft -= width;
       },
       scrollRight() {
-        const width = document.getElementById('my-favorite-box').clientWidth
-        document.getElementById('my-favorite-box').scrollLeft += width;
+        const width = document.getElementById('most-favorite-box').clientWidth
+        document.getElementById('most-favorite-box').scrollLeft += width;
       }
     }
   }

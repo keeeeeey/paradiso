@@ -5,9 +5,9 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from movies.serializers import MovieSerializer, CommentSerializer
 from movies.models import Movie, Genre
-import random
+import json
 
-from .serializers import UserSerializer, ProfileSerializer, UserFavoriteSerializer
+from .serializers import UserSerializer, ProfileSerializer
 
 
 @api_view(['POST'])
@@ -170,9 +170,6 @@ def createFavorite(request):
 
 @api_view(['GET'])
 def userFavorites(request):
-    # me = request.user
-    # serializer = UserFavoriteSerializer(me)
-
     my_favorites = request.user.favorite_movies.all()
     my_genres = []
     similar_movies = set()
@@ -188,4 +185,23 @@ def userFavorites(request):
 
     serializer = MovieSerializer(similar_movies, many=True)
 
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def mostFavorite(request):
+    movies = Movie.objects.all()
+    most_favorite_movies = []
+
+    for movie in movies:
+        most_favorite_movies.append([movie.favorite_user.count(), movie])
+
+    most_favorite_movies.sort(key=lambda x: -x[0])
+
+    most_favorite_movies_object = []
+    for i in range(10):
+        most_favorite_movies_object.append(most_favorite_movies[i][1])
+
+    serializer = MovieSerializer(most_favorite_movies_object, many=True)
+    
     return Response(serializer.data)

@@ -2,8 +2,9 @@
   <div class="margin-by-fixed">
     <div class="profile-data-box">
       <div class="profile-img-box">
-        <img src="../assets/logo.png" alt="profile-img" class="profile-img">
+        <img src="../assets/defaultprofileimg.jpeg" alt="profile-img" class="profile-img">        
       </div>
+      <i class="fa-solid fa-camera fa-2x profile-img-update"></i>
       <div class="d-flex justify-content-center align-items-center">
         <h1>{{ nickname }}</h1>
         <div v-if="!isMypage" style="margin-left: 10px;">
@@ -15,9 +16,7 @@
         팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
       </div>
       <br>
-      <h2>좋아하는 영화</h2>
-    </div>
-    
+    </div>    
     <ProfileLikeMovieList :likeMovieList="totaldata?.movieSerializer"/>
     <h1 class="text-center mt-5 mt-1">작성한 댓글</h1>
     <ProfileCommentList :commentList="totaldata?.commentSerializer"/>

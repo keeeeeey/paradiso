@@ -10,13 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("id", "username", "email", "nickname")
 
 
-class UserFavoriteSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = get_user_model()
-        fields = ("favorite_movies",)
-
-
 class ProfileSerializer(serializers.ModelSerializer):
 
     followings_count = serializers.IntegerField(source="followings.count", read_only=True)
