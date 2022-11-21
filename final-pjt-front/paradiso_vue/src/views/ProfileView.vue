@@ -4,7 +4,7 @@
       <div class="profile-img-box">
         <img src="../assets/defaultprofileimg.jpeg" alt="profile-img" class="profile-img">        
       </div>
-      <i class="fa-solid fa-camera fa-2x profile-img-update"></i>
+      <i class="fa-solid fa-camera fa-2x profile-img-update" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
       <div class="d-flex justify-content-center align-items-center">
         <h1>{{ nickname }}</h1>
         <div v-if="!isMypage" style="margin-left: 10px;">
@@ -16,12 +16,43 @@
         팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
       </div>
       <br>
-    </div>    
+    </div>
     <ProfileLikeMovieList :likeMovieList="totaldata?.movieSerializer"/>
     <h1 class="text-center mt-5 mt-1">작성한 댓글</h1>
     <ProfileCommentList :commentList="totaldata?.commentSerializer"/>
     <h1 class="text-center mt-5 mt-1">좋아요한 댓글</h1>
     <ProfileCommentList :commentList="totaldata?.likeCommentSerializer"/>
+
+    <!-- Modal -->
+    <div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 200px;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">사진 선택</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" enctype="multipart/form-data">
+              <input type="file" id="chooseFile" name="chooseFile" @change="loadFile(this)">
+            </form>
+            <div class="fileContainer">
+              <div class="fileInput">
+                <p>FILE NAME: </p>
+                <p id="fileName"></p>
+              </div>
+              <div class="button ms-3 me-2">
+                <label for="chooseFile">
+                  CLICK HERE!
+                </label>
+              </div>
+              <div class="buttonContainer">
+                <div class="submitButton" id="submitButton">SUBMIT</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -94,6 +125,13 @@ export default {
           alert('로그인이 필요합니다.')
           this.$router.push({ name: 'LogInView' })
         }
+      },
+
+      loadFile(input) {
+        console.log(input)
+        let file = input.files[0];
+        let name = document.getElementById('fileName');
+        name.textContent = file.name;
       }
     }
 }
@@ -118,5 +156,51 @@ export default {
 .profile-data-box {
   text-align: center;
   margin-top: 50px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#chooseFile {
+    visibility: hidden;
+}
+
+.fileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileInput {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 2px black;
+    width: 60%;
+    height: 30px;
+}
+
+#fileName {
+    margin-left: 5px;
+}
+
+.buttonContainer {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    background-color: rgb(31, 135, 195);;
+    color: white;
+    border-radius: 30px;
+    padding: 5px;
+    font-weight: bold;
+    cursor: pointer;
 }
 </style>

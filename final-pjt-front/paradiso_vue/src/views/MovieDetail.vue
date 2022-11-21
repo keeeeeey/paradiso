@@ -42,7 +42,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <span style="font-size: large"><b>{{ moviedata.title }} 예고편</b></span>
+            <span style="font-size: large"><b>{{ moviedata?.title }} 예고편</b></span>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="turnOff"></button>
           </div>
           <div class="modal-body modal-box">
