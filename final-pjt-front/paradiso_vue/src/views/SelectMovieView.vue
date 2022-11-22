@@ -66,6 +66,11 @@ export default {
         const my_favorite = this.my_favorite_movies
         const token = localStorage.getItem('accessToken')
 
+        if (my_favorite.length < 3) {
+          alert("영화를 3개 이상 선택해주세요.")
+          return
+        } 
+
         axios({
           method: "post",
           url: `${API_URL}/accounts/addfavoritemovies/`,
