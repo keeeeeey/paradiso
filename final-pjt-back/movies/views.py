@@ -142,3 +142,8 @@ def do_search(request, keyWord):
         return Response({"the_movie_serializer" : the_movie_serializer.data, "serializer" : serializer.data})
     else:
         return Response({"the_movie_serializer" : "", "serializer" : serializer.data})
+
+
+@api_view(['GET'])
+def find_similar_movie(request, movie_id):
+    movie = Movie.objects.get(movie_id=movie_id)
