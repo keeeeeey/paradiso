@@ -124,12 +124,21 @@ def get_movies_by_genre(request, genre, limit, offset):
 @api_view(['GET'])
 def do_search(request, keyWord):
     key_list = list(keyWord.split())
+
+    the_movie = Movie.objects.filter(title=keyWord)
+
     search_result = set()
     for key in key_list:
         movies = Movie.objects.filter(Q(title__icontains=key) | 
                                       Q(overview__icontains=key)).distinct()
         for movie in movies:
-            search_result.add(movie)
+            if the_movie and movie != the_movie[0]:
+                search_result.add(movie)
+    
     serializer = MovieSearchSerializer(search_result, many=True)
 
-    return Response(serializer.data)
+    if the_movie:
+        the_movie_serializer = MovieSearchSerializer(the_movie[0])
+        return Response({"the_movie_serializer" : the_movie_serializer.data, "serializer" : serializer.data})
+    else:
+        return Response({"the_movie_serializer" : "", "serializer" : serializer.data})

@@ -35,7 +35,7 @@
             </li>
           </ul>
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="keyWord">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model.trim="keyWord" @keyup.enter="doSearch">
             <i type="submit" class="fa-solid fa-magnifying-glass fa-2x nav-icon" @click="doSearch"></i>
           </form>
         </div>
@@ -102,16 +102,11 @@ export default {
 
     doSearch() {
       const keyWord = this.keyWord
-      console.log(keyWord)
-
-      axios({
-        method: "get",
-        url: `http://127.0.0.1:8000/movies/search/${keyWord}`
-      })
-        .then((res) => {
-          console.log(res)
-        })
-        .catch(() => {})
+      if (keyWord) {
+        this.$router.push({ name: "SearchResultView", params: { "keyWord": keyWord } }).catch(()=>{})
+      } else {
+        alert("검색어를 입력해주세요.")
+      }
     }
   }
 }

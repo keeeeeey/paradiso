@@ -7,6 +7,7 @@ import SelectMovieView from '@/views/SelectMovieView'
 import MovieDetial from '@/views/MovieDetail'
 import ProfileView from '@/views/ProfileView'
 import MoviesByGenreView from '@/views/MoviesByGenreView'
+import SearchResultView from '@/views/SearchResultView'
 
 Vue.use(VueRouter)
 
@@ -56,6 +57,12 @@ const routes = [
     path: '/movies/genre/:genre',
     name: 'MoviesByGenreView',
     component: MoviesByGenreView
+  },
+
+  {
+    path: '/movies/search/:keyWord',
+    name: 'SearchResultView',
+    component: SearchResultView
   }
 ]
 
