@@ -45,6 +45,9 @@
               }
             });
         },
+      },
+      destroyed() {
+        this.$emit("reset-genre")
       }
   }
   </script>

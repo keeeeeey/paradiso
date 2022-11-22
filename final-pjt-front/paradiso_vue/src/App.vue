@@ -41,7 +41,7 @@
         </div>
       </div>
     </nav>
-    <router-view @Login="isLoggedIn=true" :key="$route.fullPath"/>
+    <router-view @Login="isLoggedIn=true" @reset-genre="resetGenre" :key="$route.fullPath"/>
 
   </div>
 </template>
@@ -93,6 +93,10 @@ export default {
     movieByGenre(genre) {
       this.genre = genre
       this.$router.push({ name: "MoviesByGenreView", params: { "genre": genre } })
+    },
+
+    resetGenre() {
+      this.genre = "GENRES"
     }
   }
 }
