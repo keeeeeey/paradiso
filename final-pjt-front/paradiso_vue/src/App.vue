@@ -30,7 +30,7 @@
                 {{ genre }}
               </a>
               <ul class="dropdown-menu">
-                <li v-for="genre in genres" :key="genre.id" @click="movieByGenre(genre.name)"><span class="dropdown-item">{{ genre.name }}</span></li>
+                <li v-for="genre in genres" :key="genre.id" @click="movieByGenre(genre.name)"><span class="dropdown-item cursor-pointer">{{ genre.name }}</span></li>
               </ul>
             </li>
           </ul>
@@ -140,5 +140,8 @@ nav{
   color: white;
   box-sizing: border-box;
   margin: 5px
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 </style>
