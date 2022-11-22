@@ -34,14 +34,14 @@
               </ul>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model.trim="keyWord" @keyup.enter="doSearch">
+          <form @submit.prevent="doSearch" class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model.trim="keyWord">
             <i type="submit" class="fa-solid fa-magnifying-glass fa-2x nav-icon" @click="doSearch"></i>
           </form>
         </div>
       </div>
     </nav>
-    <router-view @Login="isLoggedIn=true" @reset-genre="resetGenre" :key="$route.fullPath"/>
+    <router-view @Login="isLoggedIn=true" @reset-genre="resetGenre" :key="$route.fullPath" @search-bar-reset="searchBarReset" />
 
   </div>
 </template>
@@ -107,6 +107,10 @@ export default {
       } else {
         alert("검색어를 입력해주세요.")
       }
+    },
+
+    searchBarReset() {
+      this.keyWord = null
     }
   }
 }
