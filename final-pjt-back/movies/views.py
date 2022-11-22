@@ -146,4 +146,26 @@ def do_search(request, keyWord):
 
 @api_view(['GET'])
 def find_similar_movie(request, movie_id):
-    movie = Movie.objects.get(movie_id=movie_id)
+    genres = Movie.objects.values('genres').filter(id=movie_id)
+    length = len(genres)
+    genre_list = []
+    for i in range(length):
+        genre_list.append(list(genres[i].values())[0])
+    genre1 = Genre.objects.get(id=genre_list[0])
+    movies = genre1.movie_set.exclude(id=movie_id)
+    if length > 1:
+        genre2 = Genre.objects.get(id=genre_list[1])
+        movie2 = genre2.movie_set.all()
+        movies = movies.intersection(movie2)
+    if length > 2:
+        genre3 = Genre.objects.get(id=genre_list[2])
+        movie3 = genre3.movie_set.all()
+        movies = movies.intersection(movie3)
+
+    if len(movies) > 20:
+        movies = movies[:20]
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+    
+    
+
