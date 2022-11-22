@@ -162,7 +162,7 @@ export default {
       axios({
         method: 'get',
         // similar
-        url: `https://api.themoviedb.org/3/movie/${this.movie_id}/similar?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR&page=1`,
+        url: `http://127.0.0.1:8000/similar/${this.movie_id}/`,
         })
           .then ((res) => {
             this.similarmovies = res.data.results

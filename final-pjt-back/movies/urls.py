@@ -12,4 +12,5 @@ urlpatterns = [
     path('genres/', views.genre_list),
     path('genre/<genre>/<int:limit>/<int:offset>/', views.get_movies_by_genre),
     path('search/<keyWord>', views.do_search),
+    path('similar/<int:movie_id>/', views.find_similar_movie)
 ]
