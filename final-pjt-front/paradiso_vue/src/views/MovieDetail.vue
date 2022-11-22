@@ -162,10 +162,10 @@ export default {
       axios({
         method: 'get',
         // similar
-        url: `http://127.0.0.1:8000/similar/${this.movie_id}/`,
+        url: `http://127.0.0.1:8000/movies/similar/${this.movie_id}/`,
         })
           .then ((res) => {
-            this.similarmovies = res.data.results
+            this.similarmovies = res.data
           })
           .catch(err => {
             console.log(err)
