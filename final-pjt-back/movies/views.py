@@ -132,7 +132,7 @@ def do_search(request, keyWord):
         movies = Movie.objects.filter(Q(title__icontains=key) | 
                                       Q(overview__icontains=key)).distinct()
         for movie in movies:
-            if the_movie and movie != the_movie[0]:
+            if movie not in the_movie:
                 search_result.add(movie)
     
     serializer = MovieSearchSerializer(search_result, many=True)
