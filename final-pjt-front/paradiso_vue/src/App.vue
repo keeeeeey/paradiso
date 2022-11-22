@@ -35,8 +35,8 @@
             </li>
           </ul>
           <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <i type="submit" class="fa-solid fa-magnifying-glass fa-2x nav-icon"></i>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="keyWord">
+            <i type="submit" class="fa-solid fa-magnifying-glass fa-2x nav-icon" @click="doSearch"></i>
           </form>
         </div>
       </div>
@@ -57,6 +57,7 @@ export default {
       isLoggedIn: false,
       genres: null,
       genre: "GENRES",
+      keyWord: null,
     }
   },
   computed: {
@@ -97,6 +98,20 @@ export default {
 
     resetGenre() {
       this.genre = "GENRES"
+    },
+
+    doSearch() {
+      const keyWord = this.keyWord
+      console.log(keyWord)
+
+      axios({
+        method: "get",
+        url: `http://127.0.0.1:8000/movies/search/${keyWord}`
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch(() => {})
     }
   }
 }

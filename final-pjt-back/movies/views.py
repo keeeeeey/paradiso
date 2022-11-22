@@ -4,8 +4,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-from .serializers import MovieSerializer, CommentSerializer, GenreSerializer
+from .serializers import MovieSerializer, CommentSerializer, GenreSerializer, MovieSearchSerializer
 from .models import Movie, Comment, Genre
+from django.db.models import Q
 
 # Create your views here.
 @api_view(['GET'])
@@ -117,4 +118,18 @@ def get_movies_by_genre(request, genre, limit, offset):
     genre = Genre.objects.get(name=genre)
     movies = genre.movie_set.all()[offset:limit]
     serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def do_search(request, keyWord):
+    key_list = list(keyWord.split())
+    search_result = set()
+    for key in key_list:
+        movies = Movie.objects.filter(Q(title__icontains=key) | 
+                                      Q(overview__icontains=key)).distinct()
+        for movie in movies:
+            search_result.add(movie)
+    serializer = MovieSearchSerializer(search_result, many=True)
+
     return Response(serializer.data)

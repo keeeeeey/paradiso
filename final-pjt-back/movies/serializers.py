@@ -10,6 +10,13 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class MovieSearchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = "__all__"
+
+
 class MovieSerializer(serializers.ModelSerializer):
     genres = GenreSerializer(read_only=True, many=True)
     like_users_count = serializers.IntegerField(source="like_users.count", read_only=True)
