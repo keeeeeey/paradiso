@@ -28,6 +28,7 @@
         </div>
       </div>
     </div>
+    <SimilarMovieList :similarmovies="similarmovies" :moviedata="moviedata"/>
     <div class="d-flex justify-content-center my-5 align-items-center">
       <div class="input-group flex-nowrap w-75">
         <span class="input-group-text" id="addon-wrapping">댓글</span>
@@ -66,6 +67,7 @@
 <script>
 import axios from 'axios'
 import CommentList from '@/components/CommentList.vue'
+import SimilarMovieList from '@/components/SimilarMovieList.vue'
 const token = localStorage.getItem('accessToken')
 
 export default {
@@ -82,6 +84,7 @@ export default {
             videodata: null,
             videourl: "https://www.youtube-nocookie.com/embed/",
             isTurn: false,
+            similarmovies: null,
         }
     },
     computed: {
@@ -115,6 +118,7 @@ export default {
     },
     components: {
       CommentList,
+      SimilarMovieList,
     },
     created() {
       axios({
@@ -151,6 +155,22 @@ export default {
             this.videodata = res.data
             console.log(this.videodata.results)
           })
+          .catch(() => {
+            console.log('가져오기 실패')
+          })
+
+      axios({
+        method: 'get',
+        // similar
+        url: `https://api.themoviedb.org/3/movie/${this.movie_id}/similar?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR&page=1`,
+        })
+          .then ((res) => {
+            this.similarmovies = res.data.results
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    
     },
     methods: {
       movieLike() {

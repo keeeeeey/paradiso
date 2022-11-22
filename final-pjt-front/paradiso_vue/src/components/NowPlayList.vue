@@ -6,8 +6,8 @@
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>
     </div>
-    <i class="fa-solid fa-chevron-left fa-2x arrow-left" @click="scrollLeft"></i>
-    <i class="fa-solid fa-chevron-right fa-2x arrow-right" @click="scrollRight"></i>
+    <i class="fa-solid fa-chevron-left fa-2x arrow-left cursor-pointer" @click="scrollLeft"></i>
+    <i class="fa-solid fa-chevron-right fa-2x arrow-right cursor-pointer" @click="scrollRight"></i>
   </div>
 </template>
 
