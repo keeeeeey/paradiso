@@ -67,7 +67,38 @@ export default {
   },
   created: function() {
     const token = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken")
+
     if (token) {
+      axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/api/token/verify/",
+        data: {'token': token}
+      })
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+          if (err.response.status === 401) {
+            axios({
+              method: "post",
+              url: "http://127.0.0.1:8000/api/token/refresh/",
+              data: {'refresh': refreshToken},
+            })
+              .then((res) => {
+                console.log(res)
+                localStorage.setItem("accessToken", res.data.access)
+              })
+              .catch((err) => {
+                console.log(err)
+                localStorage.removeItem("accessToken")
+                localStorage.removeItem("refreshToken")
+                this.$router.push({ name: "LogInView" })
+              })
+          }
+        })
+      
       this.isLoggedIn = true;
     }
 
@@ -77,7 +108,7 @@ export default {
     })
       .then((res) => {
         this.genres = res.data
-      })
+      }) 
       .catch((err) => {
         console.log(err)
       })

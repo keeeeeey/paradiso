@@ -50,6 +50,7 @@ export default {
         .then((res) => {
           this.$store.dispatch("save_user", res.data)
           localStorage.setItem("accessToken", res.data.access)
+          localStorage.setItem("refreshToken", res.data.refresh)
           this.$emit("Login")
 
           if (res.data.isFirst) {
