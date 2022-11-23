@@ -26,11 +26,26 @@
           <div>줄거리</div>
           <p>{{ moviedata?.overview }}</p>
           <div class="d-flex">
-            <div class="me-5 d-flex flex-column"><span>{{ actor }}</span><span style="font-size: 14px;">actor</span></div>
-            <div class="ms-5 d-flex flex-column"><span>{{ director }}</span><span style="font-size: 14px;">director</span></div>
+            <div class="me-5 d-flex flex-column"><span>{{ director?.name }}</span><span style="font-size: 14px;">director</span></div>
+            <div class="ms-5 d-flex flex-column"><span>{{ actor }}</span><span style="font-size: 14px;">actor</span></div>
           </div>
         </div>
       </div>
+    </div>
+    <h3>감독/출연</h3>
+    <div class="margin-by-fixed" style="position: relative">
+      <div class="poster-container" id="upcoming-movielist">
+        <div class="d-flex" style="height: 100%">
+          <div class="a col-2 take-movies" v-if="director">
+            <img :src="profile_img_url + director?.profile_path" alt="" class="mw-100" style="height: 100%">
+          </div>
+          <div v-for="actor in all_actor" :key="actor.id" class="a col-2 take-movies">
+            <img :src="profile_img_url + actor.profile_path" alt="" class="mw-100" style="height: 100%">
+          </div>
+        </div>
+      </div>
+      <i class="fa-solid fa-chevron-left fa-2x arrow-left cursor-pointer" @click="scrollLeft"></i>
+      <i class="fa-solid fa-chevron-right fa-2x arrow-right cursor-pointer" @click="scrollRight"></i>
     </div>
     <SimilarMovieList :similarmovies="similarmovies" :moviedata="moviedata"/>
     <div class="d-flex justify-content-center my-5 align-items-center">
@@ -91,6 +106,8 @@ export default {
             similarmovies: null,
             director: null,
             actor: null,
+            all_actor: null,
+            profile_img_url: 'https://www.themoviedb.org/t/p/w138_and_h175_face'
         }
     },
     computed: {
@@ -193,12 +210,12 @@ export default {
         url: `https://api.themoviedb.org/3/movie/${this.movie_id}/credits?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR`
       })
         .then((res) => {
-          console.log(res.data)
           this.actor = res.data.cast[0].name
+          this.all_actor = res.data.cast.slice(0, 9)
           let crew = res.data.crew
           crew.forEach(element => {
             if (element.job === 'Director') {
-              this.director = element.name
+              this.director = element
               return
             }
           });
@@ -264,6 +281,14 @@ export default {
 
       turnOff() {
         this.isTurn = false
+      },
+      scrollLeft() {
+        const width = document.getElementById('upcoming-movielist').clientWidth
+        document.getElementById('upcoming-movielist').scrollLeft -= width;
+      },
+      scrollRight() {
+        const width = document.getElementById('upcoming-movielist').clientWidth
+        document.getElementById('upcoming-movielist').scrollLeft += width;
       }
     }
 }
