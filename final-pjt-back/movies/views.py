@@ -172,4 +172,9 @@ def find_similar_movie(request, movie_id):
     return Response(serializer.data)
     
     
+@api_view(['GET'])
+def like_count(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    like_count = movie.like_users.count()
+    return Response({"like_count": like_count})
 
