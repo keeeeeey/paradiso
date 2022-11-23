@@ -8,6 +8,8 @@ from .serializers import MovieSerializer, CommentSerializer, GenreSerializer, Mo
 from .models import Movie, Comment, Genre
 from django.db.models import Q
 
+import random
+
 # Create your views here.
 @api_view(['GET'])
 def movie_list(request, limit, offset):
@@ -163,6 +165,8 @@ def find_similar_movie(request, movie_id):
         movies = movies.intersection(movie3)
 
     if len(movies) > 20:
+        movies = list(movies)
+        random.shuffle(movies)
         movies = movies[:20]
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
