@@ -53,7 +53,6 @@ export default {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          console.log(res.data);
           this.myFavorites = res.data;
         })
         .catch((err) => {

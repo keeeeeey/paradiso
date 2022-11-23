@@ -7,7 +7,17 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("id", "username", "email", "nickname")
+        fields = ("id", "username", "email", "nickname",)
+
+
+class UserFollowSerializer(serializers.ModelSerializer):
+    
+    followings_count = serializers.IntegerField(source="followings.count", read_only=True)
+    followers_count = serializers.IntegerField(source="followers.count", read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ("id", "username", "email", "nickname", "followings_count", "followers_count",)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -17,7 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("username", "email", "nickname", "followings_count", "followers_count", "id")
+        fields = ("id", "username", "email", "nickname", "followings_count", "followers_count",)
 
 
 # jwt token 결과 커스텀 

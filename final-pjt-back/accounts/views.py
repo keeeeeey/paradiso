@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from movies.serializers import MovieSerializer, CommentSerializer
-from movies.models import Movie, Genre
+from movies.models import Movie
 
-from .serializers import UserSerializer, ProfileSerializer
+from .serializers import UserSerializer, UserFollowSerializer, ProfileSerializer
 
 
 @api_view(['POST'])
@@ -177,8 +177,7 @@ def userFavorites(request):
         for genre in movie.genres.all():
             if genre.id not in my_genres:
                 my_genres.append(genre.id)
-                temp_genre = Genre.objects.get(pk=genre.id)
-                similar_list = temp_genre.movie_set.order_by("?")
+                similar_list = genre.movie_set.order_by("?")
                 for i in range(3):
                     similar_movies.add(similar_list[i])
 
@@ -203,4 +202,22 @@ def mostFavorite(request):
 
     serializer = MovieSerializer(most_favorite_movies_object, many=True)
     
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getFollowings(request, nickname):
+    User = get_user_model()
+    person = get_object_or_404(User, nickname=nickname)
+    followings = person.followings.all()
+    serializer = UserFollowSerializer(followings, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getFollowers(request, nickname):
+    User = get_user_model()
+    person = get_object_or_404(User, nickname=nickname)
+    followers = person.followers.all()
+    serializer = UserFollowSerializer(followers, many=True)
     return Response(serializer.data)

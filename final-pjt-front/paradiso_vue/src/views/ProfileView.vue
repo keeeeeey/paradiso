@@ -13,7 +13,7 @@
         </div>
       </div>
       <div v-if="totalData">
-        팔로잉: {{ totalData.userSerializer.followings_count }} | 팔로워: {{ followercount }}
+        <span @click="getFollowings">팔로잉: {{ totalData.userSerializer.followings_count }}</span> | <span @click="getFollowers">팔로워: {{ followercount }}</span>
       </div>
       <br>
     </div>
@@ -131,6 +131,14 @@ export default {
           alert('로그인이 필요합니다.')
           this.$router.push({ name: 'LogInView' })
         }
+      },
+
+      getFollowings() {
+        this.$router.push({ name: "UserFollowListView", params: { "nickname": this.nickname, "follow": "팔로잉" } })
+      },
+
+      getFollowers() {
+        this.$router.push({ name: "UserFollowListView", params: { "nickname": this.nickname, "follow": "팔로워" } })
       },
 
       loadFile() {
