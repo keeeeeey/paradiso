@@ -36,7 +36,7 @@
         <button @click="inputComment" class="input-group-text" id="addon-wrapping">등록하기</button>
       </div>
     </div>
-    <CommentList :movieid="movie_id" :key="componenetRerender" @updatecomment="updateComment"/>
+    <CommentList :movieid="movie_id" :key="componentRerender" @updatecomment="updateComment"/>
 
     <!-- Modal -->
     <div class="modal fade modal-lg" style="margin-top: 100px;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,7 +78,7 @@ export default {
             comment: null,
             moviedata: null,
             imgurl: 'https://image.tmdb.org/t/p/original',
-            componenetRerender: 0,
+            componentRerender: 0,
             isliked: false,
             like_count: 0,
             videodata: null,
@@ -205,7 +205,7 @@ export default {
           headers: {'Authorization': `Bearer ${token}`},
           })
           .then(() => {
-            this.componenetRerender += 1
+            this.componentRerender += 1
             this.comment = null
           })
           .catch(err => {
@@ -219,7 +219,7 @@ export default {
       },
 
       updateComment() {
-        this.componenetRerender += 1
+        this.componentRerender += 1
       },
 
       turnOn() {
