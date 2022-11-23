@@ -58,8 +58,8 @@
           </div>
         </div>
       </div>
-      <i class="fa-solid fa-chevron-left fa-lg arrow-left cursor-pointer" @click="scrollLeft"></i>
-      <i class="fa-solid fa-chevron-right fa-lg arrow-right cursor-pointer" @click="scrollRight"></i>
+      <i class="fa-solid fa-chevron-left fa-2x arrow-left cursor-pointer" @click="scrollLeft" style="top: 42.5%"></i>
+      <i class="fa-solid fa-chevron-right fa-2x arrow-right cursor-pointer" @click="scrollRight" style="top: 42.5%"></i>
     </div>
     <SimilarMovieList :similarmovies="similarmovies" :moviedata="moviedata"/>
     <div class="d-flex justify-content-center my-5 align-items-center">
