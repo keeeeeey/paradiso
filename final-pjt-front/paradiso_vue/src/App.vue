@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="min-vh-100">
-    <nav class="navbar navbar-expand-lg position-fixed" style="width:70%">
+    <nav v-if="!isSelectView" class="navbar navbar-expand-lg position-fixed" style="width:70%">
       <div class="container-fluid">
         <router-link class="navbar-brand" :to="{ name: 'MovieView' }">
           <img src="./assets/logo.png" alt="Bootstrap" width="40">
@@ -63,6 +63,9 @@ export default {
   computed: {
     userInfo() {
       return this.$store.state.user
+    },
+    isSelectView() {
+      return this.$store.state.isSelectView
     }
   },
   created: function() {
@@ -153,6 +156,7 @@ export default {
   width: 70%;
   margin: 0 auto;
   background-color: white;
+  padding-bottom: 50px;
 }
 
 nav{

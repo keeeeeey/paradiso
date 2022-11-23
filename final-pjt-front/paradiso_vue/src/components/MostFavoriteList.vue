@@ -1,7 +1,7 @@
 <template>
   <div class="margin-by-fixed" style="position: relative">
     <h2 class="ms-3 mb-4">사람들이 가장 많이 선택한 영화</h2>
-    <div class="d-flex poster-container" id="most-favorite-box">
+    <div class="d-flex poster-container pe-2" id="most-favorite-box">
       <div
         v-for="mostFavorite in mostFavorites"
         :key="mostFavorite.id"

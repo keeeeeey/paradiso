@@ -3,7 +3,7 @@
     <h2 class="ms-3 mb-4">좋아할만한 영화</h2>
     <div
       v-if="myFavorites"
-      class="d-flex poster-container"
+      class="d-flex poster-container pe-2"
       id="my-favorite-box"
     >
       <div
