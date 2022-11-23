@@ -37,10 +37,24 @@
       <div class="poster-container" id="upcoming-movielist">
         <div class="d-flex p-2" style="height: 100%">
           <div class="col-2 take-movies me-2" v-if="director">
-            <img :src="profile_img_url + director?.profile_path" alt="" class="mw-100" style="height: 100%; border-radius: 10px;">
+            <div class="card">
+              <img :src="profile_img_url + director?.profile_path" class="card-img-top" alt="...">
+              <div class="card-body" style="padding: 8px; height: 77.98px;">
+                <h5 class="card-title" style="font-size: 15px;">{{ director.name }}</h5>
+                <p class="card-text" style="font-size: 12px;">director</p>
+              </div>
+            </div>
+            <!-- <img :src="profile_img_url + director?.profile_path" alt="" class="mw-100" style="height: 100%; border-radius: 10px;"> -->
           </div>
           <div v-for="actor in all_actor" :key="actor.id" class="col-2 take-movies me-2">
-            <img :src="profile_img_url + actor.profile_path" alt="" class="mw-100" style="height: 100%; border-radius: 10px;">
+            <div class="card">
+              <img :src="profile_img_url + actor?.profile_path" class="card-img-top" alt="...">
+              <div class="card-body" style="padding: 8px; height: 77.98px;">
+                <h5 class="card-title" style="font-size: 15px;">{{ actor.name }}</h5>
+                <p class="card-text" style="font-size: 12px;">{{ actor.character }}</p>
+              </div>
+            </div>
+            <!-- <img :src="profile_img_url + actor.profile_path" alt="" class="mw-100" style="height: 100%; border-radius: 10px;"> -->
           </div>
         </div>
       </div>
