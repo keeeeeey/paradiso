@@ -70,7 +70,6 @@ export default {
   },
   created: function() {
     const token = localStorage.getItem("accessToken")
-    const refreshToken = localStorage.getItem("refreshToken")
 
     if (token) {
       axios({
@@ -83,20 +82,9 @@ export default {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            axios({
-              method: "post",
-              url: "http://127.0.0.1:8000/api/token/refresh/",
-              data: {'refresh': refreshToken},
-            })
-              .then((res) => {
-                localStorage.setItem("accessToken", res.data.access)
-                this.isLoggedIn = true;
-              })
-              .catch(() => {
-                localStorage.removeItem("accessToken")
-                localStorage.removeItem("refreshToken")
-                this.$router.push({ name: "LogInView" })
-              })
+            this.$store.dispatch("refresh")
+            this.isLoggedIn = true;
+            this.$router.go()
           }
         })
     }

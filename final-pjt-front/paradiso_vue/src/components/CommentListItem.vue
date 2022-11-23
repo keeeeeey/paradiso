@@ -60,8 +60,12 @@ export default {
           this.islike = res.data.is_liked
           this.likecount = res.data.like_users_count
         })
-        .catch(() => {
-          console.log('좋아요 실패')
+        .catch((err) => {
+          // console.log(err)
+          if (err.response.status === 401) {
+            this.$store.dispatch("refresh")
+            this.likeComment()
+          }
         })
       } else {
         alert('로그인이 필요합니다')
@@ -81,7 +85,10 @@ export default {
           document.getElementById("comment-item").remove()
         })
         .catch(err => {
-          console.log(err)
+          if (err.response.status === 401) {
+            this.$store.dispatch("refresh")
+            this.deleteComment()
+          }
         })
       } else {
         alert('로그인이 필요합니다')
@@ -109,28 +116,40 @@ export default {
           this.$emit('updatecomment')
         })
         .catch((err) => {
-          console.log(err)
+          if (err.response.status === 401) {
+            this.$store.dispatch("refresh")
+            this.updateComment()
+          }
         })
 
     },
     goToProfile(nickname) {
       this.$router.push({ name: "ProfileView", params: {"nickname": nickname} })
+    },
+    getIsLikeComment() {
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        axios({
+        method: 'get',
+        url: `http://127.0.0.1:8000/accounts/${this.comment.id}/comments/islike/`,
+        headers: {'Authorization': `Bearer ${token}`},
+      })
+        .then(res => {
+          this.islike = res.data.is_liked
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            this.$store.dispatch("refresh")
+            this.getIsLikeComment()
+          }
+        })
+      } else {
+        this.islike = false
+      }
     }
   },
   created() {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      axios({
-      method: 'get',
-      url: `http://127.0.0.1:8000/accounts/${this.comment.id}/comments/islike/`,
-      headers: {'Authorization': `Bearer ${token}`},
-    })
-    .then(res => {
-      this.islike = res.data.is_liked
-    })
-    } else {
-      this.islike = false
-    }
+    this.getIsLikeComment()
   }
 }
 </script>
