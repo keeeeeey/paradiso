@@ -25,6 +25,10 @@
           <p>"{{ moviedata?.tagline }}"</p>
           <div>줄거리</div>
           <p>{{ moviedata?.overview }}</p>
+          <div class="d-flex">
+            <div class="me-5 d-flex flex-column"><span>{{ actor }}</span><span style="font-size: 14px;">actor</span></div>
+            <div class="ms-5 d-flex flex-column"><span>{{ director }}</span><span style="font-size: 14px;">director</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -85,6 +89,8 @@ export default {
             videourl: "https://www.youtube-nocookie.com/embed/",
             isTurn: false,
             similarmovies: null,
+            director: null,
+            actor: null,
         }
     },
     computed: {
@@ -181,6 +187,25 @@ export default {
           .catch(err => {
             console.log(err)
           })
+
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/${this.movie_id}/credits?api_key=9adec2ecce07845598e041a9836861b2&language=ko-KR`
+      })
+        .then((res) => {
+          console.log(res.data)
+          this.actor = res.data.cast[0].name
+          let crew = res.data.crew
+          crew.forEach(element => {
+            if (element.job === 'Director') {
+              this.director = element.name
+              return
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err)
+        })
     
     },
     methods: {
