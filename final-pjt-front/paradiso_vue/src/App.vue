@@ -156,7 +156,7 @@ export default {
   width: 70%;
   margin: 0 auto;
   background-color: white;
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 nav{
