@@ -32,20 +32,20 @@
         </div>
       </div>
     </div>
-    <h3>감독/출연</h3>
-    <div class="margin-by-fixed" style="position: relative">
+    <h3 class="mt-4 mb-3">감독/출연</h3>
+    <div style="position: relative;">
       <div class="poster-container" id="upcoming-movielist">
-        <div class="d-flex" style="height: 100%">
-          <div class="a col-2 take-movies" v-if="director">
-            <img :src="profile_img_url + director?.profile_path" alt="" class="mw-100" style="height: 100%">
+        <div class="d-flex p-2" style="height: 100%">
+          <div class="col-2 take-movies me-2" v-if="director">
+            <img :src="profile_img_url + director?.profile_path" alt="" class="mw-100" style="height: 100%; border-radius: 10px;">
           </div>
-          <div v-for="actor in all_actor" :key="actor.id" class="a col-2 take-movies">
-            <img :src="profile_img_url + actor.profile_path" alt="" class="mw-100" style="height: 100%">
+          <div v-for="actor in all_actor" :key="actor.id" class="col-2 take-movies me-2">
+            <img :src="profile_img_url + actor.profile_path" alt="" class="mw-100" style="height: 100%; border-radius: 10px;">
           </div>
         </div>
       </div>
-      <i class="fa-solid fa-chevron-left fa-2x arrow-left cursor-pointer" @click="scrollLeft"></i>
-      <i class="fa-solid fa-chevron-right fa-2x arrow-right cursor-pointer" @click="scrollRight"></i>
+      <i class="fa-solid fa-chevron-left fa-lg arrow-left cursor-pointer" @click="scrollLeft"></i>
+      <i class="fa-solid fa-chevron-right fa-lg arrow-right cursor-pointer" @click="scrollRight"></i>
     </div>
     <SimilarMovieList :similarmovies="similarmovies" :moviedata="moviedata"/>
     <div class="d-flex justify-content-center my-5 align-items-center">
