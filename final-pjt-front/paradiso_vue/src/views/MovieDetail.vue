@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <h3 class="mt-4 ms-3 mb-3">감독/출연</h3>
+    <h3 class="mt-5 ms-3 mb-3">감독/출연</h3>
     <div style="position: relative;">
       <div class="poster-container" id="upcoming-movielist">
         <div class="d-flex p-2" style="height: 100%">

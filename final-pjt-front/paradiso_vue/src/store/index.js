@@ -54,6 +54,7 @@ export default new Vuex.Store({
         .catch(() => {
           localStorage.removeItem("accessToken")
           localStorage.removeItem("refreshToken")
+          localStorage.removeItem("vuex")
           this.$router.push({ name: "LogInView" })
         })
     }
