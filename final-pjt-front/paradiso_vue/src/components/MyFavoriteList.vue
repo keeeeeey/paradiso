@@ -33,7 +33,6 @@
   <script>
 import MyFavoriteListItem from "@/components/MyFavoriteListItem";
 import axios from "axios";
-const token = localStorage.getItem("accessToken");
 
 export default {
   name: "MyFavoriteList",
@@ -46,19 +45,7 @@ export default {
     };
   },
   created() {
-    if (token) {
-      axios({
-        method: "get",
-        url: "http://127.0.0.1:8000/accounts/userfavorites/",
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          this.myFavorites = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    this.getMyFavoriteMovie()
   },
   methods: {
     goToMovie(pk) {
@@ -72,6 +59,25 @@ export default {
       const width = document.getElementById("my-favorite-box").clientWidth;
       document.getElementById("my-favorite-box").scrollLeft += width;
     },
+    getMyFavoriteMovie() {
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        axios({
+          method: "get",
+          url: "http://127.0.0.1:8000/accounts/userfavorites/",
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((res) => {
+            this.myFavorites = res.data;
+          })
+          .catch((err) => {
+            if (err.response.status === 401) {
+              this.$store.dispatch("refresh")
+              this.getMyFavoriteMovie()
+            }
+          });
+      }
+    }
   },
 };
 </script>

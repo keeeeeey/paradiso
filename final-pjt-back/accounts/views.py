@@ -175,11 +175,13 @@ def userFavorites(request):
     for favorite in my_favorites:
         movie = get_object_or_404(Movie, pk=favorite.id)
         for genre in movie.genres.all():
-            if genre.id not in my_genres:
-                my_genres.append(genre.id)
-                similar_list = genre.movie_set.order_by("?")
-                for i in range(3):
-                    similar_movies.add(similar_list[i])
+            if genre not in my_genres:
+                my_genres.append(genre)
+    
+    for genre in my_genres:
+        similar_list = genre.movie_set.order_by("?")[:3]
+        for similar in similar_list:
+            similar_movies.add(similar)
 
     serializer = MovieSerializer(similar_movies, many=True)
 
