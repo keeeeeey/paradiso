@@ -1,6 +1,6 @@
 <template>
   <div class="margin-by-fixed" style="position: relative">
-    <h1>좋아할만한 영화</h1>
+    <h2 class="ms-3 mb-4">좋아할만한 영화</h2>
     <div
       v-if="myFavorites"
       class="d-flex poster-container"
