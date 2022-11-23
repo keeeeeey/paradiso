@@ -83,7 +83,6 @@ export default {
       },
     },
     created() {
-      const token = localStorage.getItem('accessToken')
       axios({
         method: 'get',
         url: `http://127.0.0.1:8000/accounts/profile/${this.nickname}/`,
@@ -93,20 +92,7 @@ export default {
         this.totaldata = res.data.serializer
         this.followercount = res.data.serializer.userSerializer.followers_count
       })
-      if (token) {
-        axios({
-          method: 'get',
-          url: `http://127.0.0.1:8000/accounts/${this.nickname}/isfollow/`,
-          headers: {'Authorization': `Bearer ${token}`}
-        })
-        .then(res => {
-          this.isfollow = res.data.is_followed
-          this.isMypage = res.data.is_mypage
-        })
-      } else {
-        this.isfollow = false
-      }
-  
+      this.getIsFollow()
     },
     methods: {
       follow() {
@@ -122,7 +108,11 @@ export default {
             this.followercount = res.data.followers_count
           })
           .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            if (err.response.status === 401) {
+              this.$store.dispatch("refresh")
+              this.follow()
+            }
           })
         } else {
           alert('로그인이 필요합니다.')
@@ -142,6 +132,29 @@ export default {
         console.log(this.$refs)
         let name = document.getElementById('fileName');
         name.textContent = this.$refs.serveyImage.files[0].name;
+      },
+
+      getIsFollow() {
+        const token = localStorage.getItem('accessToken')
+        if (token) {
+          axios({
+            method: 'get',
+            url: `http://127.0.0.1:8000/accounts/${this.nickname}/isfollow/`,
+            headers: {'Authorization': `Bearer ${token}`}
+          })
+          .then(res => {
+            this.isfollow = res.data.is_followed
+            this.isMypage = res.data.is_mypage
+          })
+          .catch((err) => {
+            if (err.response.status === 401) {
+              this.$store.dispatch("refresh")
+              this.getIsFollow()
+            }
+          })
+        } else {
+          this.isfollow = false
+        } 
       }
     }
 }
