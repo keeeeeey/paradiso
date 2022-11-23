@@ -1,6 +1,9 @@
 <template>
   <div id="comment-item">
-    <p @click="goToProfile(comment.user.nickname)" style="text-align:left; cursor: pointer"><b>{{ comment.user.nickname }}</b></p>
+    <div class="d-flex align-items-center mb-3">
+      <img src="../assets/defaultprofileimg.jpeg" alt="" class="comment-profile-img me-2">
+      <p @click="goToProfile(comment.user.nickname)" style="text-align:left; cursor: pointer; margin: 0"><b>{{ comment.user.nickname }}</b></p>
+    </div>
     <div class="d-flex justify-content-between">
       <span>{{ comment.content }}</span>
       <span class="d-flex flex-column">
@@ -133,8 +136,12 @@ export default {
 </script>
 
 <style>
-.comment-delete-button{
+.comment-delete-button {
   margin-top: 0;
 }
 
+.comment-profile-img {
+  width: 5%; 
+  border-radius: 50%;
+}
 </style>
