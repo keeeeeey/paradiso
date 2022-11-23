@@ -24,7 +24,7 @@
             </div><br>
           <p>"{{ moviedata?.tagline }}"</p>
           <div>줄거리</div>
-          <p>{{ moviedata?.overview }}</p>
+          <p class="movie-detail-overview-box">{{ moviedata?.overview }}</p>
           <div class="d-flex">
             <div class="me-5 d-flex flex-column"><span>{{ director?.name }}</span><span style="font-size: 14px;">director</span></div>
             <div class="ms-5 d-flex flex-column"><span>{{ actor }}</span><span style="font-size: 14px;">actor</span></div>
@@ -338,5 +338,15 @@ export default {
 .modal-box {
   width: 100%;
   aspect-ratio: 16 / 9;
+}
+
+.movie-detail-overview-box {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical
 }
 </style>
