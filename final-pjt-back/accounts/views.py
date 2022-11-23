@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from movies.serializers import MovieSerializer, CommentSerializer
 from movies.models import Movie, Genre
-import json
 
 from .serializers import UserSerializer, ProfileSerializer
 

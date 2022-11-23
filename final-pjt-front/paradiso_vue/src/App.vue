@@ -66,8 +66,7 @@ export default {
     }
   },
   created: function() {
-    const token = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken")
+    const token = localStorage.getItem("accessToken")
 
     if (token) {
       axios({
@@ -75,31 +74,14 @@ export default {
         url: "http://127.0.0.1:8000/api/token/verify/",
         data: {'token': token}
       })
-        .then((res) => {
-          console.log(res.data)
+        .then(() => {
+          this.isLoggedIn = true;
         })
         .catch((err) => {
-          console.log(err)
           if (err.response.status === 401) {
-            axios({
-              method: "post",
-              url: "http://127.0.0.1:8000/api/token/refresh/",
-              data: {'refresh': refreshToken},
-            })
-              .then((res) => {
-                console.log(res)
-                localStorage.setItem("accessToken", res.data.access)
-              })
-              .catch((err) => {
-                console.log(err)
-                localStorage.removeItem("accessToken")
-                localStorage.removeItem("refreshToken")
-                this.$router.push({ name: "LogInView" })
-              })
+            this.$store.dispatch("refresh")
           }
         })
-      
-      this.isLoggedIn = true;
     }
 
     axios({
@@ -117,6 +99,7 @@ export default {
     LogOut() {
       this.$store.dispatch("delete_user")
       localStorage.removeItem("accessToken")
+      localStorage.removeItem("refreshToken")
       localStorage.removeItem("vuex")
       this.isLoggedIn = false
       this.$router.push({ name: "LogInView" })
@@ -149,7 +132,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'NanumSquareNeo-Variable';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -178,5 +161,12 @@ nav{
 }
 .cursor-pointer{
   cursor: pointer;
+}
+
+@font-face {
+  font-family: 'NanumSquareNeo-Variable';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 </style>

@@ -5,8 +5,8 @@
       <span>{{ comment.content }}</span>
       <span class="d-flex flex-column">
         <div>
-          <i @click="updateCommentForm" v-if="user_nickname === comment.user.nickname" class="fa-solid fa-pen m-1"></i>
-          <i @click="deleteComment" v-if="user_nickname === comment.user.nickname" class="fa-solid fa-trash m-1"></i>
+          <i @click="updateCommentForm" v-if="user && user.nickname === comment.user.nickname" class="fa-solid fa-pen m-1"></i>
+          <i @click="deleteComment" v-if="user && user.nickname === comment.user.nickname" class="fa-solid fa-trash m-1"></i>
           <i @click="likeComment" v-show="!islike" class="fa-regular fa-heart m-1"></i>
           <i @click="likeComment" v-show="islike" class="fa-solid fa-heart m-1" style="color: red;"></i>
           <span class="m-1" style="text-align:right">{{ likecount }}</span>
@@ -31,8 +31,8 @@ export default {
     comment: Object
   },
   computed: {
-    user_nickname() {
-      return this.$store.state.user.nickname
+    user() {
+      return this.$store.state.user
     }
   },
   data() {
