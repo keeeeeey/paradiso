@@ -1,8 +1,8 @@
 <template>
   <div class="margin-by-fixed" style="position: relative">
     <h1>{{ moviedata?.title }}과 비슷한 영화</h1>
-    <div class="d-flex poster-container" id="now-playlist-box">
-      <div v-for="similarmovie in similarmovies" :key="similarmovie.id" class="col-2" id="now-playlist-item">
+    <div class="d-flex poster-container p-2" id="now-playlist-box">
+      <div v-for="similarmovie in similarmovies" :key="similarmovie.id" class="col-2 me-2" id="now-playlist-item">
         <SimilarMovieListItem :similarmovie="similarmovie" @click.native="goToMovie(similarmovie.id)" style="cursor:pointer"/>
       </div>
     </div>
