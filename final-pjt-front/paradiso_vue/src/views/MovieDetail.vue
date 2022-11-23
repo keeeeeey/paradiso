@@ -132,6 +132,17 @@ export default {
         console.log(err)
       })
 
+      axios({
+          method: "get",
+          url: `http://127.0.0.1:8000/movies/${this.movie_id}/likecount/`,
+        })
+          .then((res) => {
+            this.like_count = res.data.like_count
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+
       if (token) {
         axios({
           method: "get",
