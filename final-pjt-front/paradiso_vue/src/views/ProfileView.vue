@@ -122,10 +122,7 @@ export default {
             this.followercount = res.data.followers_count
           })
           .catch((err) => {
-            if (err.response.status === 401) {
-              this.$store.dispatch("refresh")
-              this.follow()
-            }
+            console.log(err)
           })
         } else {
           alert('로그인이 필요합니다.')
