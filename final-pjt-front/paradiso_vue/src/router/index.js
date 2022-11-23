@@ -8,6 +8,7 @@ import MovieDetial from '@/views/MovieDetail'
 import ProfileView from '@/views/ProfileView'
 import MoviesByGenreView from '@/views/MoviesByGenreView'
 import SearchResultView from '@/views/SearchResultView'
+import UserFollowListView from '@/views/UserFollowListView'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,12 @@ const routes = [
     path: '/movies/search/:keyWord',
     name: 'SearchResultView',
     component: SearchResultView
+  },
+
+  {
+    path: '/accounts/follow/:nickname/:follow',
+    name: 'UserFollowListView',
+    component: UserFollowListView
   }
 ]
 

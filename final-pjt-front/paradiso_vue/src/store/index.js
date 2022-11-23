@@ -49,7 +49,7 @@ export default new Vuex.Store({
           localStorage.removeItem("refreshToken")
           this.$router.push({ name: "LogInView" })
         })
-    }
+    },
   },
   modules: {
   }
