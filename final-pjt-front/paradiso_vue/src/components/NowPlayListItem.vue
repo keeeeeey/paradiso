@@ -1,5 +1,5 @@
 <template>
-  <div class="a" style="height: 100%">
+  <div class="a ms-2" style="height: 100%; border-radius: 10px;">
     <img :src="imgurl + playmovie.poster_path" alt="" class="img-fluid" style="height: 100%">
   </div>
 </template>

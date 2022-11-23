@@ -1,5 +1,5 @@
 <template>
-  <div class="a" style="height: 100%">
+  <div class="a ms-2" style="height: 100%; border-radius: 10px;">
     <img
       :src="imgurl + myFavorite.poster_path"
       alt=""

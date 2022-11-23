@@ -1,7 +1,7 @@
 <template>
   <div class="margin-by-fixed" style="position: relative">
     <h2 class="ms-3 mb-4">상영중인 영화</h2>
-    <div class="d-flex poster-container" id="now-playlist-box">
+    <div class="d-flex poster-container pe-2" id="now-playlist-box">
       <div v-for="playmovie in playlist" :key="playmovie.id" class="col-2" id="now-playlist-item">
         <NowPlayListItem :playmovie="playmovie" @click.native="goToMovie(playmovie.id)" style="cursor:pointer"/>
       </div>

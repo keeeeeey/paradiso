@@ -1,5 +1,5 @@
 <template>
-  <div class="a" style="height: 100%">
+  <div class="a ms-2" style="height: 100%; border-radius: 10px;">
     <img :src="imgurl + upcomingmovie.poster_path" alt="" class="mw-100" style="height: 100%">
   </div>
 </template>
@@ -30,5 +30,6 @@ export default {
 
 .a:hover img {
   transform: scale(1.1);
+  cursor: pointer;
 }
 </style>

@@ -1,13 +1,15 @@
 <template>
   <div id="select-movie-view" class="margin-by-fixed">
-    <h1 class="my-5">좋아하는 영화를 선택해주세요.</h1>
+    <h1 class="mt-2 mb-5">좋아하는 영화를 선택해주세요.</h1>
     <form @submit.prevent="submitFavorite">
       <div class="favorit-select-btn-box">
         <input type="submit" class="btn btn-primary" value="선택완료">
       </div>
-      <div class="row" style="margin: 0">
-        <div v-for="movie in movies" :key="movie.id" :id="movie.id" class="select-movie-box p-0 col-2">
-          <img :src="IMG_URL + movie.poster_path" alt="" :id="movie.id + 'img'" class="mw-100" style="height: 100%" @click="selectFavoriteMovie(movie.id)">
+      <div class="row g-2 px-2">
+        <div v-for="movie in movies" :key="movie.id" :id="movie.id" class="select-movie-box col-2" style="border-radius: 10px;">
+          <div style="height: 100%;">
+            <img :src="IMG_URL + movie.poster_path" alt="" :id="movie.id + 'img'" class="mw-100" style="border-radius: 10px; height: 100%" @click="selectFavoriteMovie(movie.id)">
+          </div>
         </div>
       </div>
     </form>
@@ -36,8 +38,10 @@ export default {
     methods: {
       selectFavoriteMovie(id) {
         if (this.my_favorite_movies.length === 10) {
-          alert("영화 선택은 10개 까지만 가능합니다.")
-          return false
+          if (!this.my_favorite_movies.includes(id)) {
+            alert("영화 선택은 10개 까지만 가능합니다.")
+            return false
+          }
         }
 
         const selectedMovie = document.getElementById(id)
@@ -103,6 +107,12 @@ export default {
             }
           });
       },
+    },
+    created() {
+      this.$store.dispatch("select_view", true)
+    },
+    destroyed() {
+      this.$store.dispatch("select_view", false)
     }
 }
 </script>
@@ -114,12 +124,11 @@ export default {
 }
 
 .checked {
-  scale: 1.1;
+  scale: 1.05;
 }
 
 .select-movie-box {
   overflow: hidden;
-  border-radius: 10px;
 }
 
 .select-movie-box img {

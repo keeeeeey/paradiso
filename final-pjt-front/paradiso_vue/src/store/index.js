@@ -9,7 +9,8 @@ export default new Vuex.Store({
     createPersistedState()
   ],
   state: {
-    user: null
+    user: null,
+    isSelectView: false,
   },
   getters: {
   },
@@ -20,6 +21,10 @@ export default new Vuex.Store({
 
     DELETE_USER(state) {
       state.user = null
+    },
+
+    SELECT_VIEW(state, bool) {
+      state.isSelectView = bool
     }
   },
   actions: {
@@ -30,6 +35,10 @@ export default new Vuex.Store({
     delete_user(context) {
       context.commit("DELETE_USER")
     },
+
+    select_view(context, bool) {
+      context.commit("SELECT_VIEW", bool)
+    }
   },
   modules: {
   }

@@ -1,20 +1,24 @@
 <template>
-  <div id="movie-by-genre-view" class="margin-by-fixed">
-    <h1 class="my-5">{{ genre }}</h1>
-    <div class="row" style="margin: 0">
+  <div id="movie-by-genre-view" class="margin-by-fixed p-2">
+    <h1 style="margin: 100px 50px 25px 25px">{{ genre }}</h1>
+    <hr class="mb-4">
+    <div class="row g-2">
       <div
         v-for="movie in movies"
         :key="movie.id"
         :id="movie.id"
-        class="movies-by-genre-box p-0 col-2"
+        class="movies-by-genre-box col-2"
+        @click="goToMovie(movie.id)"
       >
-        <img
-          :src="IMG_URL + movie.poster_path"
-          alt=""
-          :id="movie.id + 'img'"
-          class="mw-100"
-          style="height: 100%"
-        />
+        <div class="a" style="height: 100%; border-radius: 10px;">
+          <img
+            :src="IMG_URL + movie.poster_path"
+            alt=""
+            :id="movie.id + 'img'"
+            class="mw-100"
+            style="height: 100%;"
+          />
+        </div>
       </div>
     </div>
     <infinite-loading @infinite="infiniteHandler"></infinite-loading>
@@ -57,6 +61,10 @@ export default {
         }
       });
     },
+
+    goToMovie(pk) {
+      this.$router.push({ name: 'MovieDetail', params: {movieId: pk}})
+    },
   },
   destroyed() {
     this.$emit("reset-genre");
@@ -64,9 +72,9 @@ export default {
 };
 </script>
   
-  <style>
-.movies-by-genre-box {
-  overflow: hidden;
-  border-radius: 10px;
-}
+<style>
+  .movies-by-genre-box {
+    overflow: hidden;
+    border-radius: 10px;
+  }
 </style>
