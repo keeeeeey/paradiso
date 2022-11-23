@@ -1,6 +1,6 @@
 <template>
   <div class="margin-by-fixed" style="position: relative">
-    <h1>{{ moviedata?.title }}과 비슷한 영화</h1>
+    <h3 style="margin-left: 16px;">{{ moviedata?.title }}과 비슷한 영화</h3>
     <div class="d-flex poster-container p-2" id="now-playlist-box">
       <div v-for="similarmovie in similarmovies" :key="similarmovie.id" class="col-2 me-2" id="now-playlist-item">
         <SimilarMovieListItem :similarmovie="similarmovie" @click.native="goToMovie(similarmovie.id)" style="cursor:pointer"/>

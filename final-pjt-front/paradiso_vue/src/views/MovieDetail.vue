@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <h3 class="mt-4 mb-3">감독/출연</h3>
+    <h3 class="mt-4 ms-3 mb-3">감독/출연</h3>
     <div style="position: relative;">
       <div class="poster-container" id="upcoming-movielist">
         <div class="d-flex p-2" style="height: 100%">
@@ -87,7 +87,8 @@
 import axios from 'axios'
 import CommentList from '@/components/CommentList.vue'
 import SimilarMovieList from '@/components/SimilarMovieList.vue'
-const token = localStorage.getItem('accessToken')
+
+let token = localStorage.getItem('accessToken')
 
 export default {
     name: 'MovieDetail',
@@ -166,28 +167,12 @@ export default {
             console.log(err)
           })
 
-      if (token) {
-        axios({
-          method: "get",
-          url: `http://127.0.0.1:8000/accounts/${this.movie_id}/movies/islike/`,
-          headers: {'Authorization': `Bearer ${token}`},
-        })
-          .then((res) => {
-            this.isliked = res.data.is_liked
-            this.like_count = res.data.like_count
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
-
       axios({
           method: "get",
           url: `https://api.themoviedb.org/3/movie/${this.movie_id}/videos?api_key=fc9c1f07b9650d1ec4f98fb39efa792e&language=ko-KR`
         })
           .then((res) => {
             this.videodata = res.data
-            console.log(this.videodata.results)
           })
           .catch(() => {
             console.log('가져오기 실패')
@@ -223,10 +208,13 @@ export default {
         .catch(err => {
           console.log(err)
         })
+
+      this.getIsLikeMovie()
     
     },
     methods: {
       movieLike() {
+        token = localStorage.getItem('accessToken')
         if (token) {
           axios({
             method: "post",
@@ -238,7 +226,10 @@ export default {
               this.like_count = res.data.like_users_count
             })
             .catch((err) => {
-              console.log(err)
+              if (err.response.status === 401) {
+                this.$store.dispatch("refresh")
+                this.movieLike()
+              }
             })
         } else {
           alert('로그인이 필요합니다.')
@@ -246,7 +237,9 @@ export default {
         }
         
       },
+
       inputComment() {
+        token = localStorage.getItem('accessToken')
         if (token) {
           axios({
           method: 'post',
@@ -262,13 +255,36 @@ export default {
             this.comment = null
           })
           .catch(err => {
-            console.log(err)
+            if (err.response.status === 401) {
+              this.$store.dispatch("refresh")
+              this.inputComment()
+            }
           })
         } else {
           alert('로그인이 필요합니다.')
           this.$router.push({ name: 'LogInView' })
         }
-        
+      },
+
+      getIsLikeMovie() {
+        token = localStorage.getItem('accessToken')
+        if (token) {
+          axios({
+            method: "get",
+            url: `http://127.0.0.1:8000/accounts/${this.movie_id}/movies/islike/`,
+            headers: {'Authorization': `Bearer ${token}`},
+          })
+            .then((res) => {
+              this.isliked = res.data.is_liked
+              this.like_count = res.data.like_count
+            })
+            .catch((err) => {
+              if (err.response.status === 401) {
+                this.$store.dispatch("refresh")
+                this.getIsLikeMovie()
+              }
+            })
+        }
       },
 
       updateComment() {
@@ -282,10 +298,12 @@ export default {
       turnOff() {
         this.isTurn = false
       },
+
       scrollLeft() {
         const width = document.getElementById('upcoming-movielist').clientWidth
         document.getElementById('upcoming-movielist').scrollLeft -= width;
       },
+
       scrollRight() {
         const width = document.getElementById('upcoming-movielist').clientWidth
         document.getElementById('upcoming-movielist').scrollLeft += width;

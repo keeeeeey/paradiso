@@ -54,7 +54,7 @@ def movie_likes(request, movie_id):
 @api_view(['GET', 'POST'])
 def comment_list(request, movie_id):
     if request.method == 'GET':
-        comments = Comment.objects.filter(movie_id=movie_id).order_by('created_at')
+        comments = Comment.objects.filter(movie_id=movie_id).order_by('-created_at')
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
