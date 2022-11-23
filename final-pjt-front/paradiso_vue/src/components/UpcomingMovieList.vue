@@ -1,6 +1,6 @@
 <template>
   <div class="margin-by-fixed" style="position: relative">
-    <h1>상영 예정 영화</h1>
+    <h2 class="ms-3 mb-4">상영 예정 영화</h2>
     <div class="d-flex poster-container" id="upcoming-movielist">
       <div v-for="upcomingmovie in upcominglist" :key="upcomingmovie.id" class="col-2 take-movies">
         <UpcomingMovieListItem :upcomingmovie="upcomingmovie" @click.native="goToMovie(upcomingmovie.id)" style="cursor: pointer;"/>
