@@ -2,7 +2,7 @@
   <div id="comment-item">
     <div class="d-flex align-items-center mb-3">
       <img src="../assets/defaultprofileimg.jpeg" alt="" class="comment-profile-img me-2">
-      <p @click="goToProfile(comment.user.nickname)" style="text-align:left; cursor: pointer; margin: 0"><b>{{ comment.user.nickname }}</b></p>
+      <p @click="goToProfile(comment.user.nickname)" style="text-align:left; cursor: pointer; margin: 0"><b>{{ comment.user.nickname }}</b></p><span style="font-size: 12px; margin-left: 10px;">{{ comment.created_at }}</span>
     </div>
     <div class="d-flex justify-content-between">
       <span>{{ comment.content }}</span>
