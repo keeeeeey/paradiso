@@ -41,7 +41,7 @@ export default new Vuex.Store({
       context.commit("SELECT_VIEW", bool)
     },
 
-    refresh() {
+    refresh(context) {
       const refreshToken = localStorage.getItem("refreshToken")
       axios({
         method: "post",
@@ -51,11 +51,14 @@ export default new Vuex.Store({
         .then((res) => {
           localStorage.setItem("accessToken", res.data.access)
         })
-        .catch(() => {
-          localStorage.removeItem("accessToken")
-          localStorage.removeItem("refreshToken")
-          localStorage.removeItem("vuex")
-          this.$router.push({ name: "LogInView" })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            context.commit("DELETE_USER")
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+            localStorage.removeItem("vuex")
+            this.$router.push({ name: "LogInView" })
+          }
         })
     }
   },

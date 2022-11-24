@@ -169,24 +169,26 @@ def createFavorite(request):
 
 @api_view(['GET'])
 def userFavorites(request):
-    my_favorites = request.user.favorite_movies.all()
-    my_genres = []
-    similar_movies = set()
-    for favorite in my_favorites:
-        movie = get_object_or_404(Movie, pk=favorite.id)
-        for genre in movie.genres.all():
-            if genre not in my_genres:
-                my_genres.append(genre)
-    
-    for genre in my_genres:
-        similar_list = genre.movie_set.order_by("?")[:3]
-        for similar in similar_list:
-            similar_movies.add(similar)
+    if request.user.is_authenticated:
+        my_favorites = request.user.favorite_movies.all()
+        my_genres = []
+        similar_movies = set()
+        for favorite in my_favorites:
+            movie = get_object_or_404(Movie, pk=favorite.id)
+            for genre in movie.genres.all():
+                if genre not in my_genres:
+                    my_genres.append(genre)
+        
+        for genre in my_genres:
+            similar_list = genre.movie_set.order_by("?")[:3]
+            for similar in similar_list:
+                similar_movies.add(similar)
 
-    serializer = MovieSerializer(similar_movies, many=True)
+        serializer = MovieSerializer(similar_movies, many=True)
 
-    return Response(serializer.data)
-
+        return Response(serializer.data)
+    else:
+        return Response({'message': '로그인 후 이용가능합니다.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
 def mostFavorite(request):
