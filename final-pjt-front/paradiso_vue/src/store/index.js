@@ -51,14 +51,12 @@ export default new Vuex.Store({
         .then((res) => {
           localStorage.setItem("accessToken", res.data.access)
         })
-        .catch((err) => {
-          if (err.response.status === 401) {
-            context.commit("DELETE_USER")
-            localStorage.removeItem("accessToken")
-            localStorage.removeItem("refreshToken")
-            localStorage.removeItem("vuex")
-            this.$router.push({ name: "LogInView" })
-          }
+        .catch(() => {
+          context.commit("DELETE_USER")
+          localStorage.removeItem("accessToken")
+          localStorage.removeItem("refreshToken")
+          localStorage.removeItem("vuex")
+          this.$router.push({ name: "LogInView" })
         })
     }
   },
